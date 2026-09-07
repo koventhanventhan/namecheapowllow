@@ -3,7 +3,24 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, subject, message } = await request.json();
+    const { name, email, subject, message, recaptchaToken } = await request.json();
+
+    // Verify reCAPTCHA
+    if (!recaptchaToken) {
+      return NextResponse.json({ success: false, message: 'reCAPTCHA token is missing.' }, { status: 400 });
+    }
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY || '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
+    const recaptchaRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${secretKey}&response=${recaptchaToken}`,
+    });
+
+    const recaptchaData = await recaptchaRes.json();
+    if (!recaptchaData.success) {
+      return NextResponse.json({ success: false, message: 'reCAPTCHA verification failed.' }, { status: 400 });
+    }
 
     const port = Number(process.env.SMTP_PORT) || 465;
     const transporter = nodemailer.createTransport({

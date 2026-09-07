@@ -7,7 +7,11 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { AnimatedSection } from '@/components/ui/animated-section';
 import { teamMembers } from '@/lib/data';
 
-export function TeamSection() {
+interface TeamSectionProps {
+  isPageHeader?: boolean;
+}
+
+export function TeamSection({ isPageHeader = false }: TeamSectionProps = {}) {
   return (
     <section id="team" className="section-padding bg-card/50">
       <Container>
@@ -15,6 +19,7 @@ export function TeamSection() {
           eyebrow="Meet the Team"
           title="The People Behind the Technology"
           description="Our diverse team of strategists, engineers, and innovators brings together decades of experience to solve your toughest technology challenges."
+          as={isPageHeader ? 'h1' : 'h2'}
         />
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

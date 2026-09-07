@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { MapPin, Mail, Phone, CalendarClock, CheckCircle2, Send } from 'lucide-react';
@@ -9,11 +10,16 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
-export function ContactSection() {
+interface ContactSectionProps {
+  isPageHeader?: boolean;
+}
+
+export function ContactSection({ isPageHeader = false }: ContactSectionProps = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const updateField = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -33,12 +39,18 @@ export function ContactSection() {
       return;
     }
 
+    const recaptchaValue = recaptchaRef.current?.getValue();
+    if (!recaptchaValue) {
+      setErrors({ recaptcha: 'Please complete the reCAPTCHA to verify you are human.' });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, recaptchaToken: recaptchaValue }),
       });
 
       const data = await response.json();
@@ -46,6 +58,7 @@ export function ContactSection() {
       if (response.ok) {
         setSubmitted(true);
         setForm({ name: '', email: '', subject: '', message: '' });
+        recaptchaRef.current?.reset();
       } else {
         setErrors({ message: data.message || 'Something went wrong. Please try again later.' });
       }
@@ -64,6 +77,7 @@ export function ContactSection() {
         <SectionHeading
           title="Ready to Transform Your Business?"
           description="Tell us about your project and we'll get back to you within one business day."
+          as={isPageHeader ? 'h1' : 'h2'}
         />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-5">
@@ -121,6 +135,22 @@ export function ContactSection() {
                   <div className="space-y-2"><Label htmlFor="email">Email address</Label><Input id="email" type="email" placeholder="info@owllow.com" value={form.email} onChange={(e) => updateField('email', e.target.value)} aria-invalid={!!errors.email} />{errors.email && <p className="text-xs text-destructive">{errors.email}</p>}</div>
                   <div className="space-y-2 sm:col-span-2"><Label htmlFor="subject">Subject</Label><Input id="subject" placeholder="How can we help?" value={form.subject} onChange={(e) => updateField('subject', e.target.value)} aria-invalid={!!errors.subject} />{errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}</div>
                   <div className="space-y-2 sm:col-span-2"><Label htmlFor="message">Message</Label><Textarea id="message" placeholder="Tell us a little about your project..." rows={6} value={form.message} onChange={(e) => updateField('message', e.target.value)} aria-invalid={!!errors.message} />{errors.message && <p className="text-xs text-destructive">{errors.message}</p>}</div>
+                  <div className="sm:col-span-2">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'}
+                      onChange={() => {
+                        if (errors.recaptcha) {
+                          setErrors((prev) => {
+                            const newErrors = { ...prev };
+                            delete newErrors.recaptcha;
+                            return newErrors;
+                          });
+                        }
+                      }}
+                    />
+                    {errors.recaptcha && <p className="text-xs text-destructive mt-1">{errors.recaptcha}</p>}
+                  </div>
                   <div className="sm:col-span-2">
                     <Button type="submit" size="lg" disabled={isSubmitting} className="w-full rounded-full bg-gradient-to-r from-primary to-primary-900 hover:from-primary-600 hover:to-primary-600 text-white shadow-lg shadow-primary/20 sm:w-auto">
                       {isSubmitting ? 'Sending...' : 'Send message'}

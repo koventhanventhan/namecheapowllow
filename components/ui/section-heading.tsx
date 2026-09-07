@@ -9,6 +9,7 @@ interface SectionHeadingProps {
   description?: string;
   align?: 'left' | 'center';
   className?: string;
+  as?: 'h1' | 'h2' | 'h3';
 }
 
 export function SectionHeading({
@@ -17,6 +18,7 @@ export function SectionHeading({
   description,
   align = 'center',
   className,
+  as: HeadingTag = 'h2',
 }: SectionHeadingProps) {
   const { ref, inView } = useInView();
 
@@ -41,9 +43,9 @@ export function SectionHeading({
           {eyebrow}
         </div>
       )}
-      <h2 className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance">
+      <HeadingTag className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance">
         {title}
-      </h2>
+      </HeadingTag>
       {description && (
         <p className="mt-4 text-base text-muted-foreground sm:text-lg text-balance">
           {description}

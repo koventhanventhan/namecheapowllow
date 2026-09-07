@@ -10,7 +10,11 @@ import { portfolioItems } from '@/lib/data';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import { cn } from '@/lib/utils';
 
-export function ProjectsSection() {
+interface ProjectsSectionProps {
+  isPageHeader?: boolean;
+}
+
+export function ProjectsSection({ isPageHeader = false }: ProjectsSectionProps = {}) {
   const { ref, isRevealed } = useScrollReveal({ threshold: 0.1 });
 
   return (
@@ -19,6 +23,7 @@ export function ProjectsSection() {
         <SectionHeading
           title="Our Recent Projects"
           description="Explore our latest work and see how we help businesses achieve their goals through innovative technology solutions."
+          as={isPageHeader ? 'h1' : 'h2'}
         />
 
         <div

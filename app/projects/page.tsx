@@ -5,7 +5,7 @@ import { TestimonialsSection } from '@/components/sections/testimonials-section'
 import { ProjectCtaSection } from '@/components/sections/project-cta-section';
 
 export const metadata: Metadata = {
-  title: 'Our Projects | IT Solutions',
+  title: 'Our Projects | Owllow IT',
   description: 'Explore our latest portfolio of technology solutions and recent projects.',
 };
 
@@ -13,7 +13,7 @@ export default function ProjectsPage() {
   return (
     <PageLayout showCta={false}>
       <div className="pt-24">
-        <ProjectsSection />
+        <ProjectsSection isPageHeader />
       </div>
       <TestimonialsSection />
       <ProjectCtaSection />

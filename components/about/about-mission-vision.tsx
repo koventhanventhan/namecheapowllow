@@ -23,7 +23,7 @@ const missionVisionData = [
     color: 'from-transparent to-transparent text-primary',
     borderColor: 'hover:border-primary/40 hover:shadow-primary/10',
   },
-];
+] as const;
 
 export function AboutMissionVision() {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -72,8 +72,8 @@ export function AboutMissionVision() {
                       item.color
                     )}
                   >
-                    {item.lordIconSrc ? (
-                      <AnimatedIcon src={item.lordIconSrc} size={40} />
+                    {'lordIconSrc' in item ? (
+                      <AnimatedIcon src={(item as any).lordIconSrc} size={40} />
                     ) : (
                       <Icon className="h-10 w-10" />
                     )}

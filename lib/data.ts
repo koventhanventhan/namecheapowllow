@@ -406,7 +406,7 @@ export const testimonials: Testimonial[] = [
     role: 'CTO',
     company: 'ShopVerse',
     content:
-      'From concept to launch, Nexus delivered a world-class e-commerce platform. The scalability and performance exceeded our expectations. They are true partners, not just vendors.',
+      'From concept to launch, Owllow delivered a world-class e-commerce platform. The scalability and performance exceeded our expectations. They are true partners, not just vendors.',
     avatar:
       'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200',
     rating: 5,

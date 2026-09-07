@@ -9,7 +9,11 @@ import { Badge } from '@/components/ui/badge';
 import { pricingPlans } from '@/lib/data';
 import { cn } from '@/lib/utils';
 
-export function PricingSection() {
+interface PricingSectionProps {
+  isPageHeader?: boolean;
+}
+
+export function PricingSection({ isPageHeader = false }: PricingSectionProps = {}) {
   return (
     <section id="pricing" className="section-padding bg-card/50">
       <Container>
@@ -17,6 +21,7 @@ export function PricingSection() {
 
           title="Plans That Scale with Your Business"
           description="Transparent, flexible pricing with no hidden fees. Choose the plan that fits your needs and upgrade anytime."
+          as={isPageHeader ? 'h1' : 'h2'}
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3 lg:items-start">

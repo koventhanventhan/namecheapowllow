@@ -10,7 +10,7 @@ import { ContactSection } from '@/components/sections/contact-section';
 export default function ContactPage() {
   return (
     <PageLayout showCta={false}>
-      <ContactSection />
+      <ContactSection isPageHeader />
     </PageLayout>
   );
 }

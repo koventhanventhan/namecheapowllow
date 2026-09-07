@@ -10,7 +10,7 @@ import { PricingSection } from '@/components/sections/pricing-section';
 export default function PricingPage() {
   return (
     <PageLayout>
-      <PricingSection />
+      <PricingSection isPageHeader />
     </PageLayout>
   );
 }
