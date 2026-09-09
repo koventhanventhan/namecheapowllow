@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu } from 'lucide-react';
-import { FaFacebookF, FaInstagram } from 'react-icons/fa6';
+
 import { Button } from '@/components/ui/button';
 import { AnimatedIcon } from '@/components/ui/animated-icon';
 import { Container } from '@/components/ui/container';
@@ -110,26 +110,7 @@ export function Navbar() {
 
           {/* Right side */}
           <div className="flex items-center gap-1.5 sm:gap-3">
-            <div className="flex items-center gap-1 sm:gap-2">
-              <a
-                href="https://www.facebook.com/owllow"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-foreground/20 text-foreground/70 dark:border-white/20 dark:text-white/80 transition-all hover:bg-[#1877F2] hover:text-white hover:border-transparent hover:scale-110 hover:shadow-md"
-                aria-label="Facebook"
-              >
-                <FaFacebookF className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-              </a>
-              <a
-                href="https://www.instagram.com/owllow"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-foreground/20 text-foreground/70 dark:border-white/20 dark:text-white/80 transition-all hover:bg-gradient-to-tr hover:from-[#F58529] hover:via-[#DD2A7B] hover:to-[#8134AF] hover:text-white hover:border-transparent hover:scale-110 hover:shadow-md"
-                aria-label="Instagram"
-              >
-                <FaInstagram className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-              </a>
-            </div>
+
             <ThemeToggle />
             <Button
               asChild

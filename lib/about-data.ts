@@ -113,8 +113,8 @@ export const aboutProjects: AboutProject[] = [
 export const clientLogos: ClientLogo[] = [
   { name: 'Consoltix Engineering', initials: 'CE', image: '/owllow_consoltix.png' },
   { name: 'DABA Engineering', initials: 'DE', image: '/owllow_daba.png' },
-  { name: 'VisitXL', initials: 'VX', image: '/owllow_visitxl.jpeg' },
-  { name: 'TiT Jaffna', initials: 'TJ', image: '/owllow_tit.jpeg' },
+  { name: 'VisitXL', initials: 'VX', image: '/owllow_visitxl.jpg' },
+  { name: 'TiT Jaffna', initials: 'TJ', image: '/owllow_tit.jpg' },
 ];
 
 export const aboutStats: AboutStatItem[] = [

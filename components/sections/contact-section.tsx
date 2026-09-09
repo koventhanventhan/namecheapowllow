@@ -47,15 +47,22 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/contact', {
+      // POSTing to our new PHP script for cPanel
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('email', form.email);
+      formData.append('subject', form.subject);
+      formData.append('message', form.message);
+      formData.append('recaptchaToken', recaptchaValue);
+
+      const response = await fetch('/contact.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, recaptchaToken: recaptchaValue }),
+        body: formData,
       });
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.success) {
         setSubmitted(true);
         setForm({ name: '', email: '', subject: '', message: '' });
         recaptchaRef.current?.reset();
