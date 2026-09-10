@@ -4,6 +4,7 @@ import { Container } from '@/components/ui/container';
 import { ServicesSection } from '@/components/sections/services-section';
 import { StatsSection } from '@/components/sections/stats-section';
 import { FaqSection } from '@/components/sections/faq-section';
+import { services } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: 'Services We Provide | Owllow Studio',
@@ -11,8 +12,30 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
+  const servicesSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: services.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.description,
+        provider: {
+          '@type': 'Organization',
+          name: 'Owllow IT Solutions',
+        },
+      },
+    })),
+  };
+
   return (
     <PageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }}
+      />
       {/* Custom Services Hero */}
       <section className="pt-32 pb-10 md:pt-40 bg-background relative overflow-hidden">
         <Container>

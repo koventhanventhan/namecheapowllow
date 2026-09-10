@@ -52,6 +52,27 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const orgSchema = {
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'LocalBusiness'],
+    name: 'Owllow IT Solutions',
+    url: 'https://owllow.com',
+    logo: 'https://owllow.com/logo.png',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Kuppilan North, Erlalai',
+      addressLocality: 'Jaffna',
+      addressCountry: 'Sri Lanka',
+    },
+    telephone: '+94767206279',
+    email: 'info@owllow.com',
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 9.6615,
+      longitude: 80.0255,
+    },
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${playfair.variable} ${inter.variable} font-body antialiased selection:bg-primary/20 selection:text-primary`}>
@@ -65,6 +86,10 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <Script src="https://cdn.lordicon.com/lordicon.js" strategy="lazyOnload" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
       </body>
     </html>
   );

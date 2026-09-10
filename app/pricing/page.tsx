@@ -8,8 +8,20 @@ export const metadata: Metadata = {
 import { PricingSection } from '@/components/sections/pricing-section';
 
 export default function PricingPage() {
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Pricing Plans | Owllow IT',
+    description: 'Transparent, flexible pricing for our IT solutions.',
+    url: 'https://owllow.com/pricing',
+  };
+
   return (
     <PageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
       <PricingSection isPageHeader />
     </PageLayout>
   );
