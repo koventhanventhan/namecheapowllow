@@ -102,3 +102,5 @@ export function ProjectsSection({ isPageHeader = false }: ProjectsSectionProps =
     </section>
   );
 }
+
+export default ProjectsSection;

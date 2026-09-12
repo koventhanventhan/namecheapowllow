@@ -81,5 +81,10 @@
   "devDependencies": {
     "@types/nodemailer": "^8.0.1",
     "@types/react-google-recaptcha": "^2.1.9"
-  }
+  },
+  "browserslist": [
+    ">0.3%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

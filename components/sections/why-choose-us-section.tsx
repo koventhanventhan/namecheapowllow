@@ -61,3 +61,5 @@ export function WhyChooseUsSection() {
     </section>
   );
 }
+
+export default WhyChooseUsSection;

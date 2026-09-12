@@ -74,6 +74,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preload" as="image" href="/website_owllow_company.svg" fetchPriority="high" />
+      </head>
       <body className={`${playfair.variable} ${inter.variable} font-body antialiased selection:bg-primary/20 selection:text-primary`}>
         <ThemeProvider
           attribute="class"
