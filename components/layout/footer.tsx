@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { FaFacebookF, FaInstagram, FaYoutube, FaXTwitter, FaWhatsapp } from 'react-icons/fa6';
+import Image from 'next/image';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -58,19 +59,21 @@ export function Footer() {
       <footer className="relative w-full bg-card font-sans border-t border-border">
         <Container className="flex flex-col lg:flex-row px-0 sm:px-0">
           {/* Left Sidebar (Gradient Brand Red to Black) */}
-          <div className="bg-gradient-to-br from-[#c1121f] to-[#2a0000] text-white p-10 lg:w-[300px] shrink-0 flex flex-col gap-10">
+          <div className="bg-gradient-to-br from-[#c1121f] to-[#2a0000] text-white p-8 lg:p-10 lg:w-[350px] shrink-0 flex flex-col gap-10">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div className="relative h-14 w-14 flex items-center justify-center shrink-0 overflow-visible">
-                <img
-                  src="/ChatGPT.png"
+              <div className="relative h-16 flex items-center justify-center shrink-0 overflow-visible">
+                <Image
+                  src="/owllow_logo_transparent_hires.webp"
                   alt="Owllow Logo"
-                  className="h-full w-auto object-contain animate-sway z-10 drop-shadow-[0_0_4px_rgba(255,255,255,1)] drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+                  width={200}
+                  height={64}
+                  className="h-full w-auto object-contain z-10 drop-shadow-[0_0_4px_rgba(255,255,255,1)] drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
                 />
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="text-3xl font-bold tracking-widest uppercase">OWLLOW</span>
-                <span className="text-xs tracking-[0.3em] font-light text-right uppercase">.com</span>
+                <span className="text-sm tracking-[0.3em] font-light text-right uppercase">.com</span>
               </div>
             </div>
 
@@ -107,9 +110,9 @@ export function Footer() {
             <div className="grid gap-8 lg:grid-cols-4">
               {/* Newsletter */}
               <div className="lg:col-span-2">
-                <h4 className="text-sm font-semibold text-foreground">
+                <h2 className="text-sm font-semibold text-foreground">
                   Subscribe to our newsletter
-                </h4>
+                </h2>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Get the latest insights and updates delivered to your inbox.
                 </p>
@@ -124,6 +127,7 @@ export function Footer() {
                   />
                   <Button
                     type="submit"
+                    aria-label="Subscribe"
                     size="icon"
                     className="bg-primary hover:bg-primary/90 text-primary-foreground shrink-0 overflow-hidden"
                   >
@@ -140,9 +144,9 @@ export function Footer() {
               {/* Link columns */}
               {footerLinks.map((col) => (
                 <div key={col.title} className="lg:col-span-1">
-                  <h4 className="text-sm font-semibold text-foreground">
+                  <h2 className="text-sm font-semibold text-foreground">
                     {col.title}
-                  </h4>
+                  </h2>
                   <ul className="mt-4 space-y-2">
                     {col.links.map((link) => (
                       <li key={link.label}>
@@ -192,10 +196,14 @@ export function Footer() {
         className="fixed bottom-6 right-6 z-50 hover:scale-110 transition-transform duration-300 drop-shadow-xl"
         aria-label="Chat on WhatsApp"
       >
-        <img
+        <Image
           src="/whatsapp_animation_owllow_colors.svg"
           alt="WhatsApp"
+          width={80}
+          height={80}
           className="w-16 h-16 md:w-20 md:h-20"
+          loading="eager"
+          fetchPriority="low"
         />
       </a>
     </>

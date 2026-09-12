@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -20,6 +20,25 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [isMapVisible, setIsMapVisible] = useState(false);
+  const [isFormInteracted, setIsFormInteracted] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsMapVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    if (mapRef.current) {
+      observer.observe(mapRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   const updateField = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -28,6 +47,7 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsFormInteracted(true);
     const nextErrors: Record<string, string> = {};
     if (!form.name.trim()) nextErrors.name = 'Please enter your name.';
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) nextErrors.email = 'Please enter a valid email.';
@@ -89,7 +109,7 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
 
         <div className="mt-14 grid gap-10 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <div className="rounded-2xl border border-border bg-background p-7 sm:p-8 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] hover:border-primary transition-all duration-500">
+            <div className="rounded-2xl border border-border bg-background p-4 sm:p-8 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] hover:border-primary transition-all duration-500">
               <h3 className="text-xl font-bold text-foreground">Get in touch</h3>
               <p className="mt-2 text-sm text-muted-foreground">Have a question or ready to start? Our team is here to help.</p>
               <div className="mt-8 space-y-5">
@@ -133,29 +153,31 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
           </div>
 
           <div className="lg:col-span-3">
-            <div className="rounded-2xl border border-border bg-background p-7 sm:p-8 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] hover:border-primary transition-all duration-500">
+            <div className="rounded-2xl border border-border bg-background p-4 sm:p-8 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] hover:border-primary transition-all duration-500">
               {submitted ? (
                 <div className="flex min-h-[380px] flex-col items-center justify-center text-center"><div className="flex h-16 w-16 items-center justify-center rounded-full bg-success/10 text-success"><CheckCircle2 className="h-8 w-8" /></div><h3 className="mt-5 text-2xl font-bold text-foreground">Message sent successfully!</h3><p className="mt-2 max-w-sm text-sm text-muted-foreground">Thanks for reaching out. One of our experts will get back to you within one business day.</p><Button onClick={() => setSubmitted(false)} variant="outline" className="mt-6">Send another message</Button></div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
+                <form onSubmit={handleSubmit} noValidate className="grid gap-5 sm:grid-cols-2" onFocus={() => setIsFormInteracted(true)} onChange={() => setIsFormInteracted(true)}>
                   <div className="space-y-2"><Label htmlFor="name">Your name</Label><Input id="name" placeholder="Gunam Venthan" value={form.name} onChange={(e) => updateField('name', e.target.value)} aria-invalid={!!errors.name} />{errors.name && <p className="text-xs text-destructive">{errors.name}</p>}</div>
                   <div className="space-y-2"><Label htmlFor="email">Email address</Label><Input id="email" type="email" placeholder="info@owllow.com" value={form.email} onChange={(e) => updateField('email', e.target.value)} aria-invalid={!!errors.email} />{errors.email && <p className="text-xs text-destructive">{errors.email}</p>}</div>
                   <div className="space-y-2 sm:col-span-2"><Label htmlFor="subject">Subject</Label><Input id="subject" placeholder="How can we help?" value={form.subject} onChange={(e) => updateField('subject', e.target.value)} aria-invalid={!!errors.subject} />{errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}</div>
                   <div className="space-y-2 sm:col-span-2"><Label htmlFor="message">Message</Label><Textarea id="message" placeholder="Tell us a little about your project..." rows={6} value={form.message} onChange={(e) => updateField('message', e.target.value)} aria-invalid={!!errors.message} />{errors.message && <p className="text-xs text-destructive">{errors.message}</p>}</div>
-                  <div className="sm:col-span-2">
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'}
-                      onChange={() => {
-                        if (errors.recaptcha) {
-                          setErrors((prev) => {
-                            const newErrors = { ...prev };
-                            delete newErrors.recaptcha;
-                            return newErrors;
-                          });
-                        }
-                      }}
-                    />
+                  <div className="sm:col-span-2 overflow-x-auto w-full pb-2">
+                    {isFormInteracted && (
+                      <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'}
+                        onChange={() => {
+                          if (errors.recaptcha) {
+                            setErrors((prev) => {
+                              const newErrors = { ...prev };
+                              delete newErrors.recaptcha;
+                              return newErrors;
+                            });
+                          }
+                        }}
+                      />
+                    )}
                     {errors.recaptcha && <p className="text-xs text-destructive mt-1">{errors.recaptcha}</p>}
                   </div>
                   <div className="sm:col-span-2">
@@ -173,15 +195,17 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
         {/* Full-width Map Card */}
         <div className="mt-10 rounded-2xl border border-border bg-background p-7 sm:p-8 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] hover:border-primary transition-all duration-500">
           <h3 className="text-2xl font-bold text-foreground">Find us here</h3>
-          <div className="mt-6 relative w-full h-[400px] rounded-2xl overflow-hidden border border-border/50 shadow-inner">
-            <iframe
-              src="https://maps.google.com/maps?hl=en&amp;q=Kuppilan%20Kenniyadi%20Vairavar%20Kovil&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-              title="Owllow IT Office Location"
-              className="w-full h-full border-0 dark:invert dark:hue-rotate-180 dark:contrast-75"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+          <div ref={mapRef} className="mt-6 relative w-full h-[400px] rounded-2xl overflow-hidden border border-border/50 shadow-inner bg-muted/20">
+            {isMapVisible && (
+              <iframe
+                src="https://maps.google.com/maps?hl=en&amp;q=Kuppilan%20Kenniyadi%20Vairavar%20Kovil&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                title="Owllow IT Office Location"
+                className="w-full h-full border-0 dark:invert dark:hue-rotate-180 dark:contrast-75"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            )}
           </div>
         </div>
       </Container>

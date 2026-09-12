@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/layout/theme-provider';
 import { CustomCursor } from '@/components/ui/custom-cursor';
-import Script from 'next/script';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -85,7 +84,6 @@ export default function RootLayout({
           <CustomCursor />
           {children}
         </ThemeProvider>
-        <Script src="https://cdn.lordicon.com/lordicon.js" strategy="lazyOnload" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}

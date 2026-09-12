@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { AnimatedIcon } from '@/components/ui/animated-icon';
+import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/use-in-view';
@@ -45,7 +45,7 @@ export function AboutHero() {
               <Link href="/contact" className="flex items-center">
                 Contact Us
                 <div className="ml-2 flex items-center justify-center transition-transform group-hover:translate-x-1">
-                  <AnimatedIcon src="https://cdn.lordicon.com/jxwksgwv.json" size={16} colors="primary:#ffffff" />
+                  <ArrowRight size={16} className="text-white" />
                 </div>
               </Link>
             </Button>

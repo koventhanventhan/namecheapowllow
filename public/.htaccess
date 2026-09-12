@@ -1,0 +1,34 @@
+Options -MultiViews
+RewriteEngine On
+
+# Explicitly allow access to the _next/ folder
+RewriteRule ^_next/ - [L]
+
+# Serve existing files/directories directly without rewriting
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Handle Next.js static routing (e.g. /about -> /about.html)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.html -f
+RewriteRule ^(.*)$ /$1.html [L]
+
+# Fallback to /index.html for unmatched routes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /index.html [L]
+
+# Set correct MIME types for .js, .mjs, .css, .json
+AddType application/javascript .js .mjs
+AddType text/css .css
+AddType application/json .json
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+</IfModule>

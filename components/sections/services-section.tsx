@@ -56,7 +56,7 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
 
         <div 
           ref={scrollContainerRef}
-          className={`${hideHeader ? 'mt-0' : 'mt-6 lg:mt-20'} relative w-full lg:pb-[10vh] flex lg:block overflow-x-auto lg:overflow-visible snap-x snap-mandatory gap-6 lg:gap-0 pb-8 lg:pb-0 px-4 sm:px-6 lg:px-0 -mx-4 sm:-mx-6 lg:mx-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}
+          className={`${hideHeader ? 'mt-0' : 'mt-6 lg:mt-20'} relative w-full lg:pb-[10vh] flex lg:block overflow-x-auto lg:overflow-visible snap-x snap-mandatory gap-6 lg:gap-0 pb-8 lg:pb-0 px-4 sm:px-6 lg:px-0 -mx-4 sm:-mx-6 lg:mx-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth touch-pan-y`}
         >
           {services.map((service, index) => {
             const Icon = service.icon;
@@ -94,7 +94,7 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
                         href="/services" 
                         className="group inline-flex lg:hidden items-center gap-1 text-foreground font-semibold text-sm hover:opacity-80 transition-opacity mb-4"
                       >
-                        Read More <span className="text-primary transition-transform duration-300 group-hover:translate-x-1">&gt;&gt;</span>
+                        Read More <span className="sr-only"> about {service.title}</span> <span className="text-primary transition-transform duration-300 group-hover:translate-x-1">&gt;&gt;</span>
                       </Link>
                       
                       <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-6 lg:mb-8 max-w-lg line-clamp-3 lg:line-clamp-none">
@@ -119,13 +119,13 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
                       href="/services" 
                       className="group hidden lg:inline-flex items-center gap-2 text-primary font-semibold text-lg hover:opacity-80 transition-opacity mt-auto pt-4"
                     >
-                      Read more 
+                      Read more <span className="sr-only"> about {service.title}</span>
                       <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                   </div>
 
                   {/* Right Column: Image */}
-                  <div className="relative w-full h-[180px] sm:h-[250px] lg:h-full rounded-xl lg:rounded-2xl overflow-hidden mt-auto lg:mt-0 shrink-0">
+                  <div className="relative w-full h-[260px] sm:h-[320px] lg:h-full rounded-xl lg:rounded-2xl overflow-hidden mt-auto lg:mt-0 shrink-0">
                     {service.image ? (
                       <Image 
                         src={service.image} 

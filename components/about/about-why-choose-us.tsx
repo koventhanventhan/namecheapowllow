@@ -4,7 +4,6 @@ import { Container } from '@/components/ui/container';
 import { whyChooseUsItems } from '@/lib/about-data';
 import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
-import { AnimatedIcon } from '@/components/ui/animated-icon';
 
 export function AboutWhyChooseUs() {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -44,11 +43,7 @@ export function AboutWhyChooseUs() {
 
                 <div className="relative">
                   <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                    {item.lordIconSrc ? (
-                      <AnimatedIcon src={item.lordIconSrc} size={28} />
-                    ) : (
                       <Icon className="h-7 w-7" />
-                    )}
                   </div>
                   <h3 className="mt-5 text-xl font-bold text-foreground">
                     {item.title}

@@ -108,7 +108,7 @@ export const services: Service[] = [
     icon: HiOutlineCodeBracket,
     features: ['Custom Websites', 'CMS Development', 'Web Applications', 'Responsive Design'],
     color: 'text-primary',
-    image: '/owllow_web_developement.png',
+    image: '/owllow_web_developement.webp',
   },
   {
     id: 'mobile-app',
@@ -117,7 +117,7 @@ export const services: Service[] = [
     icon: HiOutlineDevicePhoneMobile,
     features: ['iOS Development', 'Android Development', 'Cross-Platform Apps', 'UI/UX Design'],
     color: 'text-primary',
-    image: '/owllow_mobile_app_developement.png',
+    image: '/owllow_mobile_app_developement.webp',
   },
   {
     id: 'digital-marketing',
@@ -135,7 +135,7 @@ export const services: Service[] = [
     icon: HiOutlineServerStack,
     features: ['Frontend Development', 'Backend Systems', 'Database Architecture', 'API Integration'],
     color: 'text-primary',
-    image: '/owllow_full-stack_developement.png',
+    image: '/owllow_full-stack_developement.webp',
   },
   {
     id: 'iot',
@@ -144,7 +144,7 @@ export const services: Service[] = [
     icon: HiOutlineCpuChip,
     features: ['Smart Devices', 'IoT Platforms', 'Hardware Integration', 'Real-time Data'],
     color: 'text-primary',
-    image: '/owllow_ai_automation.png',
+    image: '/owllow_ai_automation.webp',
   },
   {
     id: 'graphic-design',
@@ -517,7 +517,7 @@ export const blogPosts: BlogPost[] = [
     machineDate: '2026-07-28',
     readTime: '10 min read',
     image:
-      '/owllow_web_developement.png',
+      '/owllow_web_developement.webp',
     author: 'Priya Sharma',
   },
   {
@@ -531,7 +531,7 @@ export const blogPosts: BlogPost[] = [
     machineDate: '2026-09-15',
     readTime: '9 min read',
     image:
-      '/owllow_ai_automation.png',
+      '/owllow_ai_automation.webp',
     author: 'Alexander Chen',
   },
   {
@@ -545,7 +545,7 @@ export const blogPosts: BlogPost[] = [
     machineDate: '2026-09-10',
     readTime: '11 min read',
     image:
-      '/owllow_mobile_app_developement.png',
+      '/owllow_mobile_app_developement.webp',
     author: 'Priya Sharma',
   },
   {

@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu } from 'lucide-react';
+import { Menu, ChevronDown, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { AnimatedIcon } from '@/components/ui/animated-icon';
 import { Container } from '@/components/ui/container';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
@@ -69,7 +68,7 @@ export function Navbar() {
                           megaMenuOpen && 'rotate-180'
                         )}
                       >
-                        <AnimatedIcon src="https://cdn.lordicon.com/dbouuzqp.json" size={16} />
+                        <ChevronDown size={16} />
                       </div>
                     )}
                   </Link>
@@ -137,7 +136,7 @@ export function Navbar() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in"
             onClick={() => setIsOpen(false)}
           />
-          <div className="fixed right-0 top-0 h-screen w-[85%] max-w-sm overflow-y-auto border-l border-border bg-background p-6 shadow-2xl animate-slide-in-right z-[61]">
+          <div className="fixed right-0 top-0 h-[100dvh] w-[85%] max-w-sm overflow-y-auto border-l border-border bg-background p-6 pb-12 sm:pb-16 shadow-2xl animate-slide-in-right z-[61]">
             <div className="flex items-center justify-between">
               <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-2.5 shrink-0 group">
                 <div className="relative h-16 w-32 flex items-center justify-center transition-transform duration-300">
@@ -146,10 +145,10 @@ export function Navbar() {
               </Link>
               <button
                 onClick={() => setIsOpen(false)}
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-border overflow-hidden"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-foreground hover:bg-muted/80 transition-colors"
                 aria-label="Close menu"
               >
-                <AnimatedIcon src="https://cdn.lordicon.com/nhfyhmlt.json" size={24} />
+                <X size={20} />
               </button>
             </div>
 

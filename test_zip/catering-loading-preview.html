@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Catering Website - Loading</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#eaf3ea;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    font-family:'Segoe UI', Arial, sans-serif;
+  }
+
+  .frame {
+    width: 1000px;
+    height: 650px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(23,52,4,0.25);
+    background:#fff;
+  }
+
+  /* blurred fake website content */
+  .site {
+    filter: blur(9px);
+    transform: scale(1.05);
+    height: 100%;
+  }
+
+  .nav {
+    height: 70px;
+    background:#173404;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding: 0 40px;
+  }
+  .nav .logo { width:36px;height:36px;border-radius:8px; background:#97c459; }
+  .nav .line { height:10px; border-radius:5px; background:#3b6d11; }
+  .nav .cta { margin-left:auto; width:110px; height:34px; border-radius:20px; background:#97c459; }
+
+  .hero {
+    height: 260px;
+    background: linear-gradient(120deg,#639922,#97c459);
+    margin: 30px 40px;
+    border-radius: 14px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding: 0 50px;
+    gap: 16px;
+  }
+  .hero .line { height:22px; width:55%; background:rgba(255,255,255,0.85); border-radius:6px; }
+  .hero .line.short { width:35%; height:14px; background:rgba(255,255,255,0.6); }
+  .hero .btn { margin-top:10px; width:150px; height:40px; border-radius:24px; background:#173404; }
+
+  .row { display:flex; gap:24px; margin: 0 40px; }
+  .card { flex:1; height: 140px; background:#eaf3de; border-radius:12px; }
+
+  /* dark scrim + loading overlay */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(23,52,4,0.35);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 22px;
+  }
+
+  .spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.35);
+    border-top-color: #ffffff;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-text {
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .loading-sub {
+    color: #eaf3de;
+    font-size: 15px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+  <div class="frame">
+    <div class="site">
+      <div class="nav">
+        <div class="logo"></div>
+        <div class="line" style="width:90px;"></div>
+        <div class="line" style="width:70px;"></div>
+        <div class="line" style="width:70px;"></div>
+        <div class="cta"></div>
+      </div>
+      <div class="hero">
+        <div class="line"></div>
+        <div class="line short"></div>
+        <div class="btn"></div>
+      </div>
+      <div class="row">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+      </div>
+    </div>
+
+    <div class="overlay">
+      <div class="spinner"></div>
+      <div class="loading-text">Loading...</div>
+      <div class="loading-sub">Catering website coming soon</div>
+    </div>
+  </div>
+
+</body>
+</html>

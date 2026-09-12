@@ -3,7 +3,6 @@
 import { Container } from '@/components/ui/container';
 import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
-import { AnimatedIcon } from '@/components/ui/animated-icon';
 import { MissionSvg, VisionSvg } from '@/components/ui/custom-icons';
 
 const missionVisionData = [
@@ -72,11 +71,7 @@ export function AboutMissionVision() {
                       item.color
                     )}
                   >
-                    {'lordIconSrc' in item ? (
-                      <AnimatedIcon src={(item as any).lordIconSrc} size={40} />
-                    ) : (
-                      <Icon className="h-10 w-10" />
-                    )}
+                    <Icon className="h-10 w-10" />
                   </div>
 
                   <h3 className="mb-4 text-2xl font-bold text-foreground">
