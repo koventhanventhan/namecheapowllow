@@ -25,7 +25,7 @@ export function CustomCursor() {
         
       if (isClickable) {
         if (circleRef.current) {
-          circleRef.current.style.transform = `translate(-50%, -50%) scale(1.5)`;
+          circleRef.current.style.setProperty('--scale', '1.5');
           circleRef.current.style.backgroundColor = 'rgba(193, 18, 31, 0.1)'; // primary color with low opacity
         }
       }
@@ -33,7 +33,7 @@ export function CustomCursor() {
 
     const handleMouseOut = () => {
       if (circleRef.current) {
-        circleRef.current.style.transform = `translate(-50%, -50%) scale(1)`;
+        circleRef.current.style.setProperty('--scale', '1');
         circleRef.current.style.backgroundColor = 'transparent';
       }
     };
@@ -57,8 +57,8 @@ export function CustomCursor() {
       dotY = e.clientY;
       
       if (dotRef.current) {
-        dotRef.current.style.left = `${dotX}px`;
-        dotRef.current.style.top = `${dotY}px`;
+        dotRef.current.style.setProperty('--x', `${dotX}px`);
+        dotRef.current.style.setProperty('--y', `${dotY}px`);
       }
     };
 
@@ -80,9 +80,9 @@ export function CustomCursor() {
       circleY += (dotY - circleY) * 0.15;
       
       if (circleRef.current) {
-        // We use left/top for circle to avoid interfering with the scale transform on hover
-        circleRef.current.style.left = `${circleX}px`;
-        circleRef.current.style.top = `${circleY}px`;
+        // We use transform with translate3d to avoid forced layout reflows
+        circleRef.current.style.setProperty('--x', `${circleX}px`);
+        circleRef.current.style.setProperty('--y', `${circleY}px`);
       }
       
       requestRef = requestAnimationFrame(animate);
@@ -111,14 +111,14 @@ export function CustomCursor() {
       {/* Outer trailing circle */}
       <div 
         ref={circleRef}
-        className="pointer-events-none fixed z-[9999] h-10 w-10 rounded-full border border-primary opacity-0 transition-all duration-300 ease-out hidden md:block"
-        style={{ transform: 'translate(-50%, -50%)', left: '-100px', top: '-100px' }}
+        className="pointer-events-none fixed z-[9999] h-10 w-10 left-0 top-0 rounded-full border border-primary opacity-0 transition-all duration-300 ease-out hidden md:block"
+        style={{ transform: 'translate3d(var(--x, -100px), var(--y, -100px), 0) translate(-50%, -50%) scale(var(--scale, 1))' }}
       />
       {/* Inner dot */}
       <div 
         ref={dotRef}
-        className="pointer-events-none fixed z-[10000] h-2 w-2 rounded-full bg-primary opacity-0 transition-opacity duration-300 hidden md:block"
-        style={{ transform: 'translate(-50%, -50%)', left: '-100px', top: '-100px' }}
+        className="pointer-events-none fixed z-[10000] h-2 w-2 left-0 top-0 rounded-full bg-primary opacity-0 transition-opacity duration-300 hidden md:block"
+        style={{ transform: 'translate3d(var(--x, -100px), var(--y, -100px), 0) translate(-50%, -50%)' }}
       />
       {/* Global CSS to hide default cursor and enforce none on pointers */}
       <style dangerouslySetInnerHTML={{__html: `
