@@ -14,7 +14,7 @@ export function AboutSection() {
       <Container className="relative z-10">
         <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-border/50">
           <Image
-            src="/owllow-it-company.jpg"
+            src="/owllow-it-company.webp"
             alt="Team at work"
             fill
             className="object-cover"

@@ -1,0 +1,211 @@
+=== Improve Image Delivery Audit ===
+
+Audit: Displays images with incorrect aspect ratio (image-aspect-ratio)
+- Filename: owllow_graphic-design.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_e-commerce.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_video_creation.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow-it-company.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_ai_automation.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: catering-loading-preview.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_digital_marketing.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_Consoltix%20Engineering.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_DABA%20Engineering%20Limited.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_visitxl.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_visitxl_web.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_tit-jaffna.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_web_developement.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_full-stack_developement.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_mobile_app_developement.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+Audit: Serves images with low resolution (image-size-responsive)
+- Filename: owllow_logo_finals.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_mobile_app_developement.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_full-stack_developement.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_web_developement.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_Consoltix%20Engineering.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_DABA%20Engineering%20Limited.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_tit-jaffna.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_visitxl.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_visitxl_web.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow_digital_marketing.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: catering-loading-preview.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+- Filename: owllow-it-company.webp
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+Audit: Image elements do not have explicit `width` and `height` (unsized-images)
+- Filename: owllow_logo_finals.png
+  Current Size: N/A
+  Displayed Size: N/A
+  Wasted Bytes: N/A
+
+Audit: Improve image delivery (image-delivery-insight)
+- Filename: owllow_logo_finals.png
+  Current Size: 1150 KiB
+  Displayed Size: N/A
+  Wasted Bytes: 894 KiB
+
+- Filename: owllow_DABA%20Engineering%20Limited.png
+  Current Size: 664 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 609 KiB
+
+- Filename: owllow_visitxl_web.png
+  Current Size: 601 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 546 KiB
+
+- Filename: owllow_Consoltix%20Engineering.png
+  Current Size: 518 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 463 KiB
+
+- Filename: owllow_tit-jaffna.png
+  Current Size: 501 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 445 KiB
+
+- Filename: owllow_visitxl.png
+  Current Size: 491 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 436 KiB
+
+- Filename: owllow_graphic-design.webp
+  Current Size: 132 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 104 KiB
+
+- Filename: owllow_video_creation.webp
+  Current Size: 125 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 98 KiB
+
+- Filename: owllow_e-commerce.webp
+  Current Size: 122 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 96 KiB
+
+- Filename: owllow-it-company.webp
+  Current Size: 99 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 53 KiB
+
+- Filename: owllow_ai_automation.webp
+  Current Size: 71 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 35 KiB
+
+- Filename: owllow_digital_marketing.webp
+  Current Size: 48 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 18 KiB
+
+- Filename: catering-loading-preview.png
+  Current Size: 19 KiB
+  Displayed Size: 412x823
+  Wasted Bytes: 9 KiB
+

@@ -9,7 +9,7 @@ export function CtaSection() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(/owllow-it-company.jpg`,
+          backgroundImage: `url(/owllow-it-company.webp`,
         }}
       />
       {/* Dark Overlay */}

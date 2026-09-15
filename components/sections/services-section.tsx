@@ -74,9 +74,9 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
                   
                   {/* Left Column: Content */}
                   <div className="flex flex-col h-full">
-                    <div className="flex-1">
+                    <div className="flex-1 flex flex-col">
                       {/* Mobile Top Area */}
-                      <div className="flex items-center justify-between mb-4 lg:mb-8">
+                      <div className="flex items-center justify-between mb-4 lg:mb-8 order-1">
                         <span className="text-2xl lg:text-4xl md:text-5xl font-sans lg:font-serif lg:font-black text-foreground lg:text-muted-foreground/30">
                           (0{index + 1})
                         </span>
@@ -85,23 +85,26 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
                         </div>
                       </div>
                       
-                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight mb-4 lg:mb-6 uppercase lg:normal-case line-clamp-2">
+                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight mb-4 lg:mb-6 uppercase lg:normal-case line-clamp-2 order-2">
                         {service.title}
                       </h3>
 
-                      {/* Read More for Mobile */}
-                      <Link 
-                        href="/services" 
-                        className="group inline-flex lg:hidden items-center gap-1 text-foreground font-semibold text-sm hover:opacity-80 transition-opacity mb-4"
-                      >
-                        Read More <span className="sr-only"> about {service.title}</span> <span className="text-primary transition-transform duration-300 group-hover:translate-x-1">&gt;&gt;</span>
-                      </Link>
+                      {/* Read More - single link, responsive via CSS */}
+                      <div className="order-3 lg:order-5 flex">
+                        <Link 
+                          href="/services" 
+                          className="group inline-flex items-center gap-1 lg:gap-2 text-foreground lg:text-primary font-semibold text-sm lg:text-lg hover:opacity-80 transition-opacity mb-4 lg:mb-0 lg:mt-auto lg:pt-4"
+                        >
+                          Read More <span className="sr-only">about {service.title}</span>
+                          <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5 text-primary transition-transform duration-300 group-hover:translate-x-1" />
+                        </Link>
+                      </div>
                       
-                      <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-6 lg:mb-8 max-w-lg line-clamp-3 lg:line-clamp-none">
+                      <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-6 lg:mb-8 max-w-lg line-clamp-3 lg:line-clamp-none order-4 lg:order-3">
                         {service.description}
                       </p>
 
-                      <ul className="space-y-2 lg:space-y-4 mb-6 lg:mb-10">
+                      <ul className="space-y-2 lg:space-y-4 mb-6 lg:mb-10 order-5 lg:order-4">
                         {service.features.slice(0, 3).map((feature, i) => (
                           <li key={i} className="flex items-start lg:items-center gap-2 lg:gap-3 text-muted-foreground lg:text-foreground font-medium text-xs sm:text-sm lg:text-base">
                             <span className="h-1.5 w-1.5 lg:h-2 lg:w-2 rounded-full bg-primary/40 lg:bg-primary mt-1.5 lg:mt-0 shrink-0" />
@@ -113,15 +116,6 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
                         )}
                       </ul>
                     </div>
-
-                    {/* Read More for Desktop */}
-                    <Link 
-                      href="/services" 
-                      className="group hidden lg:inline-flex items-center gap-2 text-primary font-semibold text-lg hover:opacity-80 transition-opacity mt-auto pt-4"
-                    >
-                      Read more <span className="sr-only"> about {service.title}</span>
-                      <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Link>
                   </div>
 
                   {/* Right Column: Image */}

@@ -126,7 +126,7 @@ export const services: Service[] = [
     icon: HiOutlineChartBar,
     features: ['Search Engine Optimization', 'Social Media Strategy', 'Content Marketing', 'Analytics & Reporting'],
     color: 'text-primary',
-    image: '/owllow_digital_marketing.jpg',
+    image: '/owllow_digital_marketing.webp',
   },
   {
     id: 'full-stack',
@@ -153,7 +153,7 @@ export const services: Service[] = [
     icon: HiOutlineLightBulb,
     features: ['Logo Design', 'Brand Identity', 'Marketing Materials', 'UI Assets'],
     color: 'text-primary',
-    image: '/owllow_graphic-design.png',
+    image: '/owllow_graphic-design.webp',
   },
   {
     id: 'e-commerce',
@@ -162,7 +162,7 @@ export const services: Service[] = [
     icon: HiOutlineGlobeAlt,
     features: ['Custom Storefronts', 'Payment Gateways', 'Inventory Management', 'B2B/B2C Platforms'],
     color: 'text-primary',
-    image: '/owllow_e-commerce.png',
+    image: '/owllow_e-commerce.webp',
   },
   {
     id: 'video-creation',
@@ -171,7 +171,7 @@ export const services: Service[] = [
     icon: HiOutlineVideoCamera,
     features: ['Motion Graphics', 'Promo Videos', 'Video Editing', 'Animation'],
     color: 'text-primary',
-    image: '/owllow_video_creation.png',
+    image: '/owllow_video_creation.webp',
   },
 ];
 
@@ -261,7 +261,7 @@ export const portfolioItems: PortfolioItem[] = [
     description:
       'Built a modern corporate website for Consoltix, a geotechnical and pavement engineering firm, showcasing their services with a clean, responsive design across desktop, tablet, and mobile.',
     image:
-      '/owllow_Consoltix Engineering.png',
+      '/owllow_Consoltix Engineering.webp',
     tags: ['Engineering', 'Corporate Website', 'Responsive Design'],
     link: 'https://consoltix.com',
   },
@@ -279,7 +279,7 @@ export const portfolioItems: PortfolioItem[] = [
     description:
       'Designed a professional website for DABA Engineering Limited, a Hamilton-based geotechnical and structural engineering firm, delivering fast turnaround solutions for residential, commercial, and infrastructure projects across Waikato and South Auckland.',
     image:
-      '/owllow_DABA Engineering Limited.png',
+      '/owllow_DABA Engineering Limited.webp',
     tags: ['Engineering', 'Corporate Website', 'Responsive Design'],
     link: 'https://daba.co.nz',
   },
@@ -290,7 +290,7 @@ export const portfolioItems: PortfolioItem[] = [
     description:
       'Developed VisitXL, an all-in-one travel and activity booking app enabling users to discover tours, book hotels, and explore nearby destinations worldwide with a fast, secure, and user-friendly interface.',
     image:
-      '/owllow_visitxl.png',
+      '/owllow_visitxl.webp',
     tags: ['Mobile App', 'Travel & Tourism', 'UI/UX Design'],
     link: 'https://visitxl.com',
   },
@@ -301,7 +301,7 @@ export const portfolioItems: PortfolioItem[] = [
     description:
       'Developed VisitXL, an all-in-one travel and activity booking appplatform enabling users to discover tours, book hotels, and explore nearby destinations worldwide with a fast, secure, and user-friendly interface.',
     image:
-      '/owllow_visitxl_web.png',
+      '/owllow_visitxl_web.webp',
     tags: ['Travel', 'Travel & Tourism', 'UI/UX Design'],
     link: 'https://visitxl.com',
   },
@@ -312,7 +312,7 @@ export const portfolioItems: PortfolioItem[] = [
     description:
       'Designed and developed a fully responsive online tutoring platform for TiT Jaffna, connecting 10,000+ students with 200+ expert tutors across Grade 1–11, A/L, Scholarship, Tamil & English medium classes.',
     image:
-      '/owllow_tit-jaffna.png',
+      '/owllow_tit-jaffna.webp',
     tags: ['Education', 'Responsive Design', 'UI/UX'],
     link: 'https://titjaffna.lk',
   },
@@ -489,7 +489,7 @@ export const blogPosts: BlogPost[] = [
     machineDate: '2026-08-10',
     readTime: '8 min read',
     image:
-      '/owllow_cloud_computing.jpg',
+      '/owllow_cloud_computing.webp',
     author: 'Sarah Mitchell',
   },
   {
@@ -503,7 +503,7 @@ export const blogPosts: BlogPost[] = [
     machineDate: '2026-08-05',
     readTime: '12 min read',
     image:
-      '/owllow_security.jpg',
+      '/owllow_security.webp',
     author: 'Marcus Rodriguez',
   },
   {
@@ -559,7 +559,7 @@ export const blogPosts: BlogPost[] = [
     machineDate: '2026-09-05',
     readTime: '7 min read',
     image:
-      '/owllow_digital_marketing.jpg',
+      '/owllow_digital_marketing.webp',
     author: 'Sarah Mitchell',
   },
 ];

@@ -83,8 +83,9 @@
     "@types/react-google-recaptcha": "^2.1.9"
   },
   "browserslist": [
-    ">0.3%",
-    "not dead",
-    "not op_mini all"
+    "Chrome >= 90",
+    "Safari >= 14",
+    "Edge >= 90",
+    "Firefox >= 88"
   ]
 }

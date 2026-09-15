@@ -8,13 +8,23 @@ import { Container } from '@/components/ui/container';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen overflow-hidden pt-20 bg-background">
+    <section className="relative min-h-screen overflow-hidden pt-20 bg-background dark:bg-black">
       {/* Subtle background decorations */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-primary/5 to-transparent rotate-45 transform origin-top-right" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[800px] h-[300px] bg-gradient-to-tr from-primary/5 to-transparent -rotate-12" />
         <div className="bg-geometric-pattern absolute inset-0 opacity-40 dark:opacity-60" />
+        
+        {/* Dark mode premium glow effects */}
+
+        <div 
+          className="absolute -bottom-[10%] -left-[10%] w-[600px] h-[600px] hidden dark:block z-0"
+          style={{
+            background: 'radial-gradient(circle, hsla(353, 83%, 51%, 0.12), transparent 60%)',
+            filter: 'blur(80px)',
+          }}
+        />
       </div>
 
       <Container className="relative z-10 flex min-h-[calc(100vh-5rem)] items-center">
@@ -23,9 +33,18 @@ export function HeroSection() {
           <div className="max-w-2xl order-2 lg:order-1">
 
 
-            <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl text-balance animate-fade-in-up">
-              Empowering Business with{' '}
-              <span className="text-gradient">Intelligent IT Solutions</span>
+            <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-balance animate-fade-in-up">
+              {/* Light mode: Red to Dark Red gradient via text-gradient class */}
+              <span className="text-gradient dark:hidden">
+                Empowering Business with Intelligent IT Solutions
+              </span>
+              
+              {/* Dark mode: Separate boxes for Intelligent and IT Solutions */}
+              <span className="hidden dark:inline text-foreground">
+                Empowering Business with{' '}
+                <span className="bg-[#E51E1B] text-white px-2 py-0.5 rounded inline-block leading-tight mt-2 sm:mt-0 border border-white/20 shadow-lg">Intelligent</span>{' '}
+                <span className="bg-[#C0191F] text-white px-2 py-0.5 rounded inline-block leading-tight mt-2 sm:mt-0 border border-white/20 shadow-lg">IT Solutions</span>
+              </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg text-muted-foreground animate-fade-in-up">
@@ -83,8 +102,19 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right: SVG Image */}
-          <div className="flex items-center justify-center animate-fade-in-up mt-10 lg:mt-0 order-1 lg:order-2">
+          {/* Right: SVG Image with Decorative Elements */}
+          <div className="flex items-center justify-center animate-fade-in-up mt-10 lg:mt-0 order-1 lg:order-2 relative">
+            
+            {/* Decorative Floating Icons */}
+            <div className="absolute top-10 left-10 animate-bounce text-primary opacity-60 z-20 hidden md:block">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+            </div>
+            
+
+
+
             <div className="relative w-full max-w-[650px] h-[300px] sm:h-[400px] lg:h-[600px]">
               <Image
                 src="/website_owllow_company.svg"

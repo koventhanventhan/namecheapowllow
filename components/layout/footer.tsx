@@ -64,7 +64,7 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <div className="relative h-16 flex items-center justify-center shrink-0 overflow-visible">
                 <Image
-                  src="/owllow_logo_transparent_hires.webp"
+                  src="/owllow_logo_transparent_hires.png"
                   alt="Owllow Logo"
                   width={200}
                   height={64}
@@ -73,7 +73,7 @@ export function Footer() {
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="text-3xl font-bold tracking-widest uppercase">OWLLOW</span>
-                <span className="text-sm tracking-[0.3em] font-light text-right uppercase">.com</span>
+                <span className="text-sm tracking-[0.3em] font-light text-right uppercase">.COM</span>
               </div>
             </div>
 

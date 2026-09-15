@@ -58,53 +58,46 @@
   }
 
   .dark {
-    /* Premium Cream/Red/Gold Theme (Triggered via Dark Mode switch) */
-    --background: 32 100% 97%;
-    /* #FFF8F0 - Soft Cream */
-    --foreground: 0 0% 12%;
-    /* #1E1E1E - Dark Text */
+    /* True Dark Theme */
+    --background: 0 0% 5%; /* pure neutral black */
+    --foreground: 30 15% 96%; /* warm off-white */
 
-    --card: 32 100% 97%;
-    --card-foreground: 0 0% 12%;
+    --card: 0 0% 9%; /* dark card */
+    --card-foreground: 30 15% 96%;
 
-    --popover: 32 100% 97%;
-    --popover-foreground: 0 0% 12%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 30 15% 96%;
 
-    --primary: 353 83% 41%;
-    /* #C1121F - Brand Red */
-    --primary-foreground: 32 100% 97%;
-    /* Cream text on red */
+    --primary: 353 83% 51%; /* Slightly brighter brand red */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 43 88% 66%;
-    /* #F4C95D - Warm Gold */
+    --secondary: 43 88% 66%; /* Warm Gold */
     --secondary-foreground: 0 0% 12%;
 
-    --muted: 32 60% 90%;
-    /* Slightly darker cream */
-    --muted-foreground: 0 0% 40%;
+    --muted: 217 32.6% 17.5%; /* slate-800 */
+    --muted-foreground: 215 20.2% 65.1%; /* slate-400 */
 
     --accent: 43 88% 66%;
-    /* Warm Gold */
     --accent-foreground: 0 0% 12%;
 
-    --destructive: 353 83% 41%;
-    --destructive-foreground: 32 100% 97%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-    --success: 123 46% 34%;
-    --success-foreground: 32 100% 97%;
+    --success: 123 46% 44%;
+    --success-foreground: 210 40% 98%;
 
     --warning: 43 88% 66%;
     --warning-foreground: 0 0% 12%;
 
-    --border: 32 40% 85%;
-    --input: 32 40% 85%;
-    --ring: 43 88% 66%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 353 83% 51%;
 
-    --chart-1: 353 83% 41%;
+    --chart-1: 353 83% 51%;
     --chart-2: 43 88% 66%;
-    --chart-3: 0 0% 12%;
-    --chart-4: 32 60% 90%;
-    --chart-5: 0 0% 8%;
+    --chart-3: 210 40% 98%;
+    --chart-4: 217 32.6% 17.5%;
+    --chart-5: 222 47% 8%;
   }
 }
 
@@ -227,7 +220,6 @@ body {
 
 /* Dark mode ambient glow + dot-grid overlay */
 .dark body {
-  background-color: #550000;
   background-image:
     radial-gradient(ellipse 70% 50% at 50% -10%, hsl(40 91% 91% / 0.1), transparent 60%),
     radial-gradient(ellipse 50% 40% at 85% 40%, hsl(201 100% 14% / 0.2), transparent 60%);
@@ -237,16 +229,7 @@ body {
 /* Section alt background for dark mode */
 /* Removed solid red background override */
 
-/* Card border in dark mode */
-.dark .border-border {
-  border-color: #C1121F;
-}
-
-.dark .bg-card,
-.dark .bg-background.border {
-  border-color: #FDF0D5;
-  /* Cream border for cards */
-}
+/* Removed hardcoded borders for dark mode cards */
 
 /* Divider override */
 .dark .border-border\/50 {
