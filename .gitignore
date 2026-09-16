@@ -40,3 +40,5 @@ next-env.d.ts
 # temp directories
 temp_extract/
 temp_final/
+.env.production  
+ 
