@@ -1,12 +1,20 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith('/admin');
 
   useEffect(() => {
+    if (isAdmin) {
+      document.body.style.cursor = 'auto';
+      return;
+    }
+
     // Only run on non-touch devices
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
@@ -104,7 +112,11 @@ export function CustomCursor() {
       cancelAnimationFrame(requestRef);
       document.body.style.cursor = 'auto';
     };
-  }, []);
+  }, [isAdmin]);
+
+  if (isAdmin) {
+    return null;
+  }
 
   return (
     <>
