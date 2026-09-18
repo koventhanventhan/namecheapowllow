@@ -3,12 +3,20 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   function middleware(req) {
-    // Allows us to add custom logic later if needed
     return NextResponse.next();
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token, req }) => {
+        const publicPaths = [
+          "/admin/login",
+          "/admin/forgot-password",
+          "/admin/reset-password",
+        ];
+        const { pathname } = req.nextUrl;
+        if (publicPaths.some((p) => pathname.startsWith(p))) return true;
+        return !!token;
+      },
     },
     pages: {
       signIn: "/admin/login",

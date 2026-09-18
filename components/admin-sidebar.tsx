@@ -1,10 +1,24 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, FolderKanban, Mail, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  FileText,
+  FolderKanban,
+  Mail,
+  LogOut,
+  ExternalLink,
+  KeyRound,
+  Menu,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { signOut } from "next-auth/react";
 
 const navItems = [
@@ -19,23 +33,38 @@ const navItems = [
   { title: "Projects", href: "/admin/projects", icon: FolderKanban },
   { title: "Messages", href: "/admin/messages", icon: Mail },
   { title: "Settings (Footer)", href: "/admin/settings", icon: LayoutDashboard },
+  { title: "Change Password", href: "/admin/change-password", icon: KeyRound },
 ];
 
-export function AdminSidebar() {
+function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 flex-shrink-0 border-r border-border dark:border-gray-800 bg-card flex flex-col min-h-[calc(100vh-4rem)] lg:min-h-screen shadow-sm">
+    <div className="flex flex-col h-full">
       <div className="p-6 border-b">
         <h2 className="text-2xl font-bold text-primary">Admin Panel</h2>
       </div>
-      <nav className="flex-1 p-4 space-y-2">
+
+      {/* View Site Button */}
+      <div className="px-4 pt-4">
+        <Link href="/" target="_blank" onClick={onNavigate}>
+          <Button variant="outline" className="w-full justify-start gap-2">
+            <ExternalLink className="h-4 w-4" />
+            View Site
+          </Button>
+        </Link>
+      </div>
+
+      <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">
         {navItems.map((item) => {
-          const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/admin");
+          const isActive =
+            pathname === item.href ||
+            (pathname.startsWith(item.href) && item.href !== "/admin");
           return (
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
                 isActive
@@ -43,15 +72,16 @@ export function AdminSidebar() {
                   : "text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-sm"
               )}
             >
-              <item.icon className="h-4 w-4" />
+              <item.icon className="h-4 w-4 shrink-0" />
               {item.title}
             </Link>
           );
         })}
       </nav>
+
       <div className="p-4 border-t">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
           onClick={() => signOut({ callbackUrl: "/admin/login" })}
         >
@@ -59,6 +89,34 @@ export function AdminSidebar() {
           Logout
         </Button>
       </div>
+    </div>
+  );
+}
+
+// Desktop permanent sidebar
+export function AdminSidebar() {
+  return (
+    <aside className="hidden lg:flex w-64 flex-shrink-0 flex-col border-r border-border dark:border-gray-800 bg-card min-h-screen shadow-sm">
+      <SidebarContent />
     </aside>
+  );
+}
+
+// Mobile top bar with sheet drawer
+export function AdminMobileBar() {
+  return (
+    <div className="lg:hidden sticky top-0 z-40 flex items-center gap-3 border-b border-border dark:border-gray-800 bg-card px-4 py-3 shadow-sm">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon" aria-label="Open menu">
+            <Menu className="h-5 w-5" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-72 p-0">
+          <SidebarContent />
+        </SheetContent>
+      </Sheet>
+      <span className="text-lg font-bold text-primary">Admin Panel</span>
+    </div>
   );
 }

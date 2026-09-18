@@ -43,9 +43,11 @@ model ContactSubmission {
 }
 
 model AdminUser {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  passwordHash        String
+  resetToken          String?   @unique
+  resetTokenExpiresAt DateTime?
 }
 
 model HeroContent {
