@@ -29,7 +29,7 @@ export function AboutStatClient({ data }: { data: any[] }) {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {data.map((stat) => (
-          <div key={stat.id} className="p-4 border rounded-lg bg-card flex flex-col justify-between">
+          <div key={stat.id} className="p-4 border rounded-2xl bg-card flex flex-col justify-between hover:shadow-md transition-shadow duration-200">
             <div className="mb-4">
               <h3 className="font-bold text-4xl text-primary">{stat.value}{stat.suffix}</h3>
               <p className="text-sm font-medium mt-1">{stat.label}</p>

@@ -25,7 +25,7 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 flex-shrink-0 border-r bg-card flex flex-col min-h-[calc(100vh-4rem)] lg:min-h-screen">
+    <aside className="w-64 flex-shrink-0 border-r border-border dark:border-gray-800 bg-card flex flex-col min-h-[calc(100vh-4rem)] lg:min-h-screen shadow-sm">
       <div className="p-6 border-b">
         <h2 className="text-2xl font-bold text-primary">Admin Panel</h2>
       </div>
@@ -37,10 +37,10 @@ export function AdminSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
                 isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-primary text-primary-foreground ring-1 ring-primary/20 shadow-sm"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-sm"
               )}
             >
               <item.icon className="h-4 w-4" />

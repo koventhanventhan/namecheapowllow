@@ -29,7 +29,7 @@ export function ClientLogoClient({ data }: { data: any[] }) {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {data.map((client) => (
-          <div key={client.id} className="p-4 border rounded-lg bg-card flex items-center gap-4">
+          <div key={client.id} className="p-4 border rounded-2xl bg-card flex items-center gap-4 hover:shadow-md transition-shadow duration-200">
             {client.image ? (
               <img src={client.image} alt={client.name} className="w-16 h-16 object-contain bg-white rounded-md p-1" />
             ) : (

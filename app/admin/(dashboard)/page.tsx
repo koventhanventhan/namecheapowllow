@@ -21,33 +21,42 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Card>
+        <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-default">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Blog Posts</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center justify-center h-9 w-9 rounded-full bg-blue-500/10 text-blue-500">
+              <FileText className="h-4 w-4" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{blogCount}</div>
+            <p className="text-xs text-muted-foreground mt-1">Published articles</p>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-default">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
-            <FolderKanban className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center justify-center h-9 w-9 rounded-full bg-violet-500/10 text-violet-500">
+              <FolderKanban className="h-4 w-4" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{projectCount}</div>
+            <p className="text-xs text-muted-foreground mt-1">Portfolio items</p>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-default">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Messages</CardTitle>
-            <Mail className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center justify-center h-9 w-9 rounded-full bg-emerald-500/10 text-emerald-500">
+              <Mail className="h-4 w-4" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{messageCount}</div>
+            <p className="text-xs text-muted-foreground mt-1">Contact submissions</p>
           </CardContent>
         </Card>
       </div>

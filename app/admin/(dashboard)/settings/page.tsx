@@ -13,7 +13,7 @@ export default async function AdminSettingsPage() {
         </p>
       </div>
 
-      <div className="border rounded-md bg-card p-6">
+      <div className="border rounded-2xl bg-card p-6 shadow-sm">
         <SettingsForm initialData={settings || {}} />
       </div>
     </div>

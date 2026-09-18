@@ -37,7 +37,7 @@ export default async function AdminBlogPage() {
         </Link>
       </div>
 
-      <div className="border rounded-md bg-card">
+      <div className="border rounded-2xl bg-card shadow-sm overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
