@@ -47,3 +47,147 @@ model AdminUser {
   email        String   @unique
   passwordHash String
 }
+
+model HeroContent {
+  id               Int    @id @default(1)
+  heading          String
+  highlightedWord1 String?
+  highlightedWord2 String?
+  subheading       String @db.Text
+  statLabel1       String?
+  statValue1       String?
+  statLabel2       String?
+  statValue2       String?
+  statLabel3       String?
+  statValue3       String?
+  ctaPrimaryText   String
+  ctaSecondaryText String?
+  updatedAt        DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  icon        String   
+  image       String?
+  features    String   
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model WhyChooseUsItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  icon        String   
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  clientName String
+  role       String
+  company    String
+  quote      String   @db.Text
+  rating     Int      @default(5)
+  photoUrl   String?
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  bio       String   @db.Text
+  photoUrl  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PricingPlan {
+  id            String   @id @default(cuid())
+  name          String
+  price         String
+  billingPeriod String
+  features      String   
+  isFeatured    Boolean  @default(false)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              Int    @id @default(1)
+  companyName     String
+  email           String?
+  phone           String?
+  whatsappNumber  String?
+  address         String? @db.Text
+  socialFacebook  String?
+  socialInstagram String?
+  socialLinkedin  String?
+  socialTwitter   String?
+  footerTagline   String? @db.Text
+  updatedAt       DateTime @updatedAt
+}
+
+model SeoMeta {
+  id          String   @id @default(cuid())
+  pageSlug    String   @unique
+  title       String
+  description String   @db.Text
+  keywords    String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AboutContent {
+  id Int @id @default(1)
+  heroHeading String @db.Text
+  heroDescription String @db.Text
+  heroImage String
+  heroButtonText String?
+  heroButtonLink String?
+  introSubtitle String
+  introHeading String
+  introParagraph1 String @db.Text
+  introParagraph2 String @db.Text
+  introParagraph3 String @db.Text
+  introButtonText String?
+  introButtonLink String?
+  introServices String @db.Text
+  missionTitle String
+  missionDescription String @db.Text
+  visionTitle String
+  visionDescription String @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ClientLogo {
+  id String @id @default(cuid())
+  name String
+  initials String
+  image String?
+  order Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AboutStat {
+  id String @id @default(cuid())
+  value Int
+  suffix String
+  label String
+  order Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

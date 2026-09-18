@@ -3,6 +3,9 @@ import { Footer } from '@/components/layout/footer';
 import { HeroSection } from '@/components/sections/hero-section';
 import { ServicesSection } from '@/components/sections/services-section';
 import dynamic from 'next/dynamic';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const AboutSection = dynamic(
   () => import('@/components/sections/about-section'),
@@ -25,17 +28,33 @@ const CtaSection = dynamic(
   { loading: () => <div className="w-full min-h-[400px] bg-background" /> }
 );
 
-export default function Home() {
+export default async function Home() {
+  const projects = await prisma.project.findMany({
+    where: { featured: true },
+    take: 6,
+    orderBy: { createdAt: 'desc' },
+  });
+
+  const heroData = await prisma.heroContent.findUnique({ where: { id: 1 } });
+  
+  const servicesData = await prisma.service.findMany({
+    orderBy: { order: 'asc' },
+  });
+  
+  const featuresData = await prisma.whyChooseUsItem.findMany({
+    orderBy: { order: 'asc' },
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       <main>
-        <HeroSection />
-        <ServicesSection />
+        <HeroSection heroData={heroData} />
+        <ServicesSection servicesData={servicesData} />
         <AboutSection />
-        <WhyChooseUsSection />
+        <WhyChooseUsSection featuresData={featuresData} />
 
-        <ProjectsSection />
+        <ProjectsSection projects={projects} />
         <TestimonialsSection />
         <CtaSection />
       </main>

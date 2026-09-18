@@ -1,16 +1,11 @@
-'use client';
-
-
-import { useState } from 'react';
 import Link from 'next/link';
-import { FaFacebookF, FaInstagram, FaYoutube, FaXTwitter, FaWhatsapp } from 'react-icons/fa6';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter, FaWhatsapp } from 'react-icons/fa6';
 import Image from 'next/image';
 import { Container } from '@/components/ui/container';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { MapPin, Mail, Phone, Send, ChevronRight } from 'lucide-react';
-import { OwllowLogo } from '@/components/ui/owllow-logo';
+import { MapPin, Mail, Phone, ChevronRight } from 'lucide-react';
+import { NewsletterForm } from './newsletter-form';
+import prisma from '@/lib/prisma';
 
 const footerLinks = [
   {
@@ -39,20 +34,16 @@ const footerLinks = [
   },
 ];
 
+export async function Footer() {
+  const settings = await prisma.siteSettings.findUnique({
+    where: { id: 1 },
+  });
 
-export function Footer() {
-
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail('');
-      setTimeout(() => setSubscribed(false), 3000);
-    }
-  };
+  const currentYear = new Date().getFullYear();
+  const phoneNumbers = settings?.phone ? settings.phone.split('\n') : [];
+  const whatsappLink = settings?.whatsappNumber 
+    ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9+]/g, '')}`
+    : 'https://wa.me/+94767206279';
 
   return (
     <>
@@ -72,39 +63,43 @@ export function Footer() {
                 />
               </div>
               <div className="flex flex-col leading-tight">
-                <span className="text-3xl font-bold tracking-widest uppercase">OWLLOW</span>
+                <span className="text-3xl font-bold tracking-widest uppercase">{settings?.companyName || 'OWLLOW'}</span>
                 <span className="text-sm tracking-[0.3em] font-light text-right uppercase">.COM</span>
               </div>
             </div>
 
             {/* Contact Info */}
             <div className="flex flex-col gap-8 text-sm font-light mt-4">
-              <div className="flex items-start gap-4">
-                <MapPin className="mt-0.5 shrink-0 h-6 w-6 text-white" />
-                <div className="leading-relaxed">
-                  Owllow,<br />
-                  Kuppilan	North,	Erlalai,<br />
-                  Jaffna,<br />
-                  Sri Lanka.
+              {settings?.address && (
+                <div className="flex items-start gap-4">
+                  <MapPin className="mt-0.5 shrink-0 h-6 w-6 text-white" />
+                  <div className="leading-relaxed whitespace-pre-line">
+                    {settings.address}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="flex items-center gap-4">
-                <Mail className="shrink-0 h-6 w-6 text-white" />
-                <a href="mailto:info@owllow.com" className="hover:underline">info@Owllow.com</a>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <Phone className="mt-0.5 shrink-0 h-6 w-6 text-white" />
-                <div className="flex flex-col gap-1">
-                  <a href="tel:+94767206279" className="hover:underline">(+94) 767 206 279</a>
-                  <a href="tel:+94113611001" className="hover:underline">(+64) 22 367 2717</a>
+              {settings?.email && (
+                <div className="flex items-center gap-4">
+                  <Mail className="shrink-0 h-6 w-6 text-white" />
+                  <a href={`mailto:${settings.email}`} className="hover:underline">{settings.email}</a>
                 </div>
-              </div>
+              )}
+
+              {phoneNumbers.length > 0 && (
+                <div className="flex items-start gap-4">
+                  <Phone className="mt-0.5 shrink-0 h-6 w-6 text-white" />
+                  <div className="flex flex-col gap-1">
+                    {phoneNumbers.map((phone, i) => (
+                      <a key={i} href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="hover:underline">{phone}</a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Right Main Section (Old Footer Data) */}
+          {/* Right Main Section */}
           <div className="text-card-foreground p-8 lg:p-10 flex-1 flex flex-col">
 
             <div className="grid gap-8 lg:grid-cols-4">
@@ -116,29 +111,7 @@ export function Footer() {
                 <p className="mt-1 text-xs text-muted-foreground">
                   Get the latest insights and updates delivered to your inbox.
                 </p>
-                <form onSubmit={handleSubscribe} className="mt-4 flex gap-2 max-w-sm">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1"
-                    required
-                  />
-                  <Button
-                    type="submit"
-                    aria-label="Subscribe"
-                    size="icon"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground shrink-0 overflow-hidden"
-                  >
-                    <Send className="h-5 w-5" />
-                  </Button>
-                </form>
-                {subscribed && (
-                  <p className="mt-2 text-xs font-medium text-success">
-                    Thanks for subscribing!
-                  </p>
-                )}
+                <NewsletterForm />
               </div>
 
               {/* Link columns */}
@@ -171,16 +144,31 @@ export function Footer() {
             {/* Bottom: Copyright & Socials */}
             <div className="flex flex-col items-center justify-between gap-4 sm:flex-row mt-auto">
               <div className="text-center sm:text-left text-sm text-muted-foreground">
-                <p>Copyright  &copy; {new Date().getFullYear()} Owllow.com All Rights Reserved.</p>
+                <p>Copyright  &copy; {currentYear} {settings?.companyName || 'Owllow'}.com All Rights Reserved.</p>
+                {settings?.footerTagline && <p className="mt-1 text-xs">{settings.footerTagline}</p>}
               </div>
 
               <div className="flex items-center gap-3">
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Facebook">
-                  <FaFacebookF className="w-4 h-4" />
-                </a>
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Instagram">
-                  <FaInstagram className="w-4 h-4" />
-                </a>
+                {settings?.socialFacebook && settings.socialFacebook !== '#' && (
+                  <a href={settings.socialFacebook} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <FaFacebookF className="w-4 h-4" />
+                  </a>
+                )}
+                {settings?.socialInstagram && settings.socialInstagram !== '#' && (
+                  <a href={settings.socialInstagram} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <FaInstagram className="w-4 h-4" />
+                  </a>
+                )}
+                {settings?.socialLinkedin && settings.socialLinkedin !== '#' && (
+                  <a href={settings.socialLinkedin} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <FaLinkedinIn className="w-4 h-4" />
+                  </a>
+                )}
+                {settings?.socialTwitter && settings.socialTwitter !== '#' && (
+                  <a href={settings.socialTwitter} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                    <FaXTwitter className="w-4 h-4" />
+                  </a>
+                )}
               </div>
             </div>
 
@@ -190,7 +178,7 @@ export function Footer() {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/+94767206279"
+        href={whatsappLink}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 hover:scale-110 transition-transform duration-300 drop-shadow-xl"

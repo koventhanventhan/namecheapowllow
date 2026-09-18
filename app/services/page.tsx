@@ -4,18 +4,24 @@ import { Container } from '@/components/ui/container';
 import { ServicesSection } from '@/components/sections/services-section';
 import { StatsSection } from '@/components/sections/stats-section';
 import { FaqSection } from '@/components/sections/faq-section';
-import { services } from '@/lib/data';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const metadata: Metadata = {
   title: 'Services We Provide | Owllow Studio',
   description: 'Designing Experiences, Elevating Brands. Explore our comprehensive services including Branding, UX/UI Design, SEO, Development, Motion, and AI.',
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const servicesData = await prisma.service.findMany({
+    orderBy: { order: 'asc' },
+  });
+
   const servicesSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement: services.map((service, index) => ({
+    itemListElement: servicesData.map((service, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       item: {
@@ -70,7 +76,7 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <ServicesSection hideHeader={true} />
+      <ServicesSection hideHeader={true} servicesData={servicesData} />
       <StatsSection />
       <FaqSection />
     </PageLayout>

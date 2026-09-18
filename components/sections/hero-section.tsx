@@ -6,7 +6,9 @@ import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 
-export function HeroSection() {
+export function HeroSection({ heroData }: { heroData: any }) {
+  if (!heroData) return null;
+
   return (
     <section className="relative min-h-screen overflow-hidden pt-20 bg-background dark:bg-black">
       {/* Subtle background decorations */}
@@ -17,7 +19,6 @@ export function HeroSection() {
         <div className="bg-geometric-pattern absolute inset-0 opacity-40 dark:opacity-60" />
         
         {/* Dark mode premium glow effects */}
-
         <div 
           className="absolute -bottom-[10%] -left-[10%] w-[600px] h-[600px] hidden dark:block z-0"
           style={{
@@ -32,25 +33,26 @@ export function HeroSection() {
           {/* Left: Text Content */}
           <div className="max-w-2xl order-2 lg:order-1">
 
-
             <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-balance animate-fade-in-up">
               {/* Light mode: Red to Dark Red gradient via text-gradient class */}
               <span className="text-gradient dark:hidden">
-                Empowering Business with Intelligent IT Solutions
+                {heroData.heading}
               </span>
               
-              {/* Dark mode: Separate boxes for Intelligent and IT Solutions */}
+              {/* Dark mode: Separate boxes for highlighted words */}
               <span className="hidden dark:inline text-foreground">
-                Empowering Business with{' '}
-                <span className="bg-[#E51E1B] text-white px-2 py-0.5 rounded inline-block leading-tight mt-2 sm:mt-0 border border-white/20 shadow-lg">Intelligent</span>{' '}
-                <span className="bg-[#C0191F] text-white px-2 py-0.5 rounded inline-block leading-tight mt-2 sm:mt-0 border border-white/20 shadow-lg">IT Solutions</span>
+                {heroData.heading.replace(heroData.highlightedWord1 || '', '').replace(heroData.highlightedWord2 || '', '')}
+                {heroData.highlightedWord1 && (
+                  <span className="bg-[#E51E1B] text-white px-2 py-0.5 rounded inline-block leading-tight mt-2 sm:mt-0 border border-white/20 shadow-lg ml-2">{heroData.highlightedWord1}</span>
+                )}
+                {heroData.highlightedWord2 && (
+                  <span className="bg-[#C0191F] text-white px-2 py-0.5 rounded inline-block leading-tight mt-2 sm:mt-0 border border-white/20 shadow-lg ml-2">{heroData.highlightedWord2}</span>
+                )}
               </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg text-muted-foreground animate-fade-in-up">
-              From cloud infrastructure to cybersecurity and custom software
-              development, we deliver technology solutions that drive
-              transformation, efficiency, and growth.
+              {heroData.subheading}
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row animate-fade-in-up">
@@ -60,45 +62,57 @@ export function HeroSection() {
                 className="group rounded-full bg-gradient-to-r from-primary to-primary-900 hover:from-primary-600 hover:to-primary-800 text-white shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all duration-300"
               >
                 <Link href="/contact">
-                  Get Started Today
+                  {heroData.ctaPrimaryText}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="group rounded-full border-border bg-background/50 backdrop-blur-sm hover:bg-background/80"
-              >
-                <Link href="/projects">
-                  <Play className="mr-2 h-4 w-4 fill-primary text-primary transition-transform group-hover:scale-125" />
-                  View Our Work
-                </Link>
-              </Button>
+              {heroData.ctaSecondaryText && (
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="group rounded-full border-border bg-background/50 backdrop-blur-sm hover:bg-background/80"
+                >
+                  <Link href="/projects">
+                    <Play className="mr-2 h-4 w-4 fill-primary text-primary transition-transform group-hover:scale-125" />
+                    {heroData.ctaSecondaryText}
+                  </Link>
+                </Button>
+              )}
             </div>
 
             {/* Trust indicators */}
             <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground animate-fade-in-up">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold font-heading text-foreground">
-                  5+
-                </span>
-                <span>Years of<br />Excellence</span>
-              </div>
-              <div className="h-8 w-px bg-border" />
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold font-heading text-foreground">
-                  50+
-                </span>
-                <span>Projects<br />Delivered</span>
-              </div>
-              <div className="h-8 w-px bg-border" />
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold font-heading text-foreground">
-                  99.9%
-                </span>
-                <span>Uptime<br />Guaranteed</span>
-              </div>
+              {heroData.statLabel1 && heroData.statValue1 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold font-heading text-foreground">
+                    {heroData.statValue1}
+                  </span>
+                  <span>{heroData.statLabel1.split(' ').map((w: string, i: number) => <span key={i}>{w}<br /></span>)}</span>
+                </div>
+              )}
+              {heroData.statLabel2 && heroData.statValue2 && (
+                <>
+                  <div className="h-8 w-px bg-border" />
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold font-heading text-foreground">
+                      {heroData.statValue2}
+                    </span>
+                    <span>{heroData.statLabel2.split(' ').map((w: string, i: number) => <span key={i}>{w}<br /></span>)}</span>
+                  </div>
+                </>
+              )}
+              {heroData.statLabel3 && heroData.statValue3 && (
+                <>
+                  <div className="h-8 w-px bg-border" />
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold font-heading text-foreground">
+                      {heroData.statValue3}
+                    </span>
+                    <span>{heroData.statLabel3.split(' ').map((w: string, i: number) => <span key={i}>{w}<br /></span>)}</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

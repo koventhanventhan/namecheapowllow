@@ -6,15 +6,16 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from '@/components/ui/section-heading';
-import { portfolioItems } from '@/lib/data';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import { cn } from '@/lib/utils';
+import { Project } from '@prisma/client';
 
 interface ProjectsSectionProps {
   isPageHeader?: boolean;
+  projects?: Project[];
 }
 
-export function ProjectsSection({ isPageHeader = false }: ProjectsSectionProps = {}) {
+export function ProjectsSection({ isPageHeader = false, projects = [] }: ProjectsSectionProps = {}) {
   const { ref, isRevealed } = useScrollReveal({ threshold: 0.1 });
 
   return (
@@ -34,12 +35,10 @@ export function ProjectsSection({ isPageHeader = false }: ProjectsSectionProps =
             isRevealed ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
           )}
         >
-          {portfolioItems.map((item, index) => (
-            <a
+          {projects.map((item, index) => (
+            <Link
               key={item.id}
-              href={item.link || '#'}
-              target={item.link ? '_blank' : undefined}
-              rel={item.link ? 'noopener noreferrer' : undefined}
+              href={`/projects/${item.slug}`}
               className="group block relative overflow-hidden rounded-2xl bg-card border border-border shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-1"
               style={{
                 transitionDelay: isRevealed ? `${index * 100}ms` : '0ms'
@@ -48,7 +47,7 @@ export function ProjectsSection({ isPageHeader = false }: ProjectsSectionProps =
               {/* Image Container with Zoom effect */}
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
-                  src={item.image}
+                  src={item.imageUrl || '/placeholder.jpg'}
                   alt={item.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -77,15 +76,15 @@ export function ProjectsSection({ isPageHeader = false }: ProjectsSectionProps =
                     {item.description}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2 lg:hidden">
-                    {item.tags.map((tag) => (
-                      <span key={tag} className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-                        {tag}
+                    {item.tags?.split(',').map((tag) => (
+                      <span key={tag.trim()} className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                        {tag.trim()}
                       </span>
                     ))}
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </Container>

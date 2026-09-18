@@ -2,21 +2,22 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { Container } from '@/components/ui/container';
-import { portfolioItems } from '@/lib/data';
 import { projectCategories } from '@/lib/about-data';
 import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
+import { Project } from '@prisma/client';
 
-export function AboutPortfolio() {
+export function AboutPortfolio({ projects = [] }: { projects?: Project[] }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const { ref, inView } = useInView({ threshold: 0.1 });
 
   const filteredProjects =
     activeCategory === 'All'
-      ? portfolioItems
-      : portfolioItems.filter((p) => p.category === activeCategory);
+      ? projects
+      : projects.filter((p) => p.category === activeCategory);
 
   return (
     <section className="relative overflow-hidden bg-background py-20 sm:py-28">
@@ -68,11 +69,9 @@ export function AboutPortfolio() {
           className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {filteredProjects.map((project, i) => (
-            <a
+            <Link
               key={project.id}
-              href={project.link || '#'}
-              target={project.link ? '_blank' : undefined}
-              rel={project.link ? 'noopener noreferrer' : undefined}
+              href={`/projects/${project.slug}`}
               className={cn(
                 'group relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1',
                 inView
@@ -84,7 +83,7 @@ export function AboutPortfolio() {
               {/* Image */}
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
-                  src={project.image}
+                  src={project.imageUrl || '/placeholder.jpg'}
                   alt={project.title}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -112,7 +111,7 @@ export function AboutPortfolio() {
                   {project.title}
                 </h3>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </Container>

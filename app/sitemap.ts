@@ -1,9 +1,11 @@
 import { MetadataRoute } from 'next';
-import { blogPosts } from '@/lib/data';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const baseUrl = 'https://owllow.com';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static Routes
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -62,14 +64,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Dynamic Blog Routes from lib/data.ts 
-  // (Note: Supabase is not currently configured in the codebase, so we use the local data mock)
-  const dynamicBlogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+  // Dynamic Routes from Prisma
+  const blogs = await prisma.blogPost.findMany({
+    select: { slug: true, publishedAt: true, createdAt: true }
+  });
+  const projects = await prisma.project.findMany({
+    select: { slug: true, createdAt: true }
+  });
+
+  const dynamicBlogRoutes: MetadataRoute.Sitemap = blogs.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.machineDate), 
+    lastModified: new Date(post.publishedAt || post.createdAt), 
     changeFrequency: 'monthly',
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...dynamicBlogRoutes];
+  const dynamicProjectRoutes: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: new Date(project.createdAt), 
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...dynamicBlogRoutes, ...dynamicProjectRoutes];
 }

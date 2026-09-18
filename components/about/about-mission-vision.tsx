@@ -5,27 +5,27 @@ import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
 import { MissionSvg, VisionSvg } from '@/components/ui/custom-icons';
 
-const missionVisionData = [
-  {
-    title: 'Our Mission',
-    description:
-      'To empower businesses with innovative digital solutions that drive growth, enhance user experiences, and establish a strong online presence in an ever-evolving digital landscape.',
-    icon: MissionSvg,
-    color: 'from-transparent to-transparent text-foreground',
-    borderColor: 'hover:border-blue-500/40 hover:shadow-blue-500/10',
-  },
-  {
-    title: 'Our Vision',
-    description:
-      'To be the leading digital transformation partner recognized globally for our commitment to excellence, creativity, and delivering measurable results that exceed client expectations.',
-    icon: VisionSvg,
-    color: 'from-transparent to-transparent text-primary',
-    borderColor: 'hover:border-primary/40 hover:shadow-primary/10',
-  },
-] as const;
-
-export function AboutMissionVision() {
+export function AboutMissionVision({ content }: { content?: any }) {
   const { ref, inView } = useInView({ threshold: 0.1 });
+
+  if (!content) return null;
+
+  const missionVisionData = [
+    {
+      title: content.missionTitle || 'Our Mission',
+      description: content.missionDescription || '',
+      icon: MissionSvg,
+      color: 'from-transparent to-transparent text-foreground',
+      borderColor: 'hover:border-blue-500/40 hover:shadow-blue-500/10',
+    },
+    {
+      title: content.visionTitle || 'Our Vision',
+      description: content.visionDescription || '',
+      icon: VisionSvg,
+      color: 'from-transparent to-transparent text-primary',
+      borderColor: 'hover:border-primary/40 hover:shadow-primary/10',
+    },
+  ];
 
   return (
     <section className="relative overflow-hidden bg-background py-20 sm:py-28">

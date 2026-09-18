@@ -9,9 +9,16 @@ import { signOut } from "next-auth/react";
 
 const navItems = [
   { title: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { title: "Hero Content", href: "/admin/hero", icon: FileText },
+  { title: "Services", href: "/admin/services", icon: FolderKanban },
+  { title: "Why Choose Us", href: "/admin/why-choose-us", icon: FileText },
+  { title: "About Content", href: "/admin/about-content", icon: FileText },
+  { title: "About Clients", href: "/admin/about-clients", icon: FolderKanban },
+  { title: "About Stats", href: "/admin/about-stats", icon: FileText },
   { title: "Blog", href: "/admin/blog", icon: FileText },
   { title: "Projects", href: "/admin/projects", icon: FolderKanban },
   { title: "Messages", href: "/admin/messages", icon: Mail },
+  { title: "Settings (Footer)", href: "/admin/settings", icon: LayoutDashboard },
 ];
 
 export function AdminSidebar() {

@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
 
-export function AboutHero() {
+export function AboutHero({ content }: { content?: any }) {
   const { ref, inView } = useInView({ threshold: 0.2 });
+
+  if (!content) return null;
 
   return (
     <section className="relative overflow-hidden bg-[hsl(var(--card))] py-16 sm:py-24 md:py-28">
@@ -28,27 +30,25 @@ export function AboutHero() {
             )}
           >
             <h1 className="font-heading text-5xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl">
-              About Us
+              {content.heroHeading}
             </h1>
-            <p className="mt-5 text-lg text-muted-foreground sm:text-xl">
-              We turn ideas into powerful digital experiences.
-
-              Our team builds modern websites, applications, and digital solutions designed to help businesses grow, improve efficiency, and reach more customers.
-
-              Ready to bring your idea to life?
+            <p className="mt-5 text-lg text-muted-foreground sm:text-xl whitespace-pre-line">
+              {content.heroDescription}
             </p>
-            <Button
-              asChild
-              size="lg"
-              className="mt-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 group"
-            >
-              <Link href="/contact" className="flex items-center">
-                Contact Us
-                <div className="ml-2 flex items-center justify-center transition-transform group-hover:translate-x-1">
-                  <ArrowRight size={16} className="text-white" />
-                </div>
-              </Link>
-            </Button>
+            {content.heroButtonText && (
+              <Button
+                asChild
+                size="lg"
+                className="mt-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 group"
+              >
+                <Link href={content.heroButtonLink || '#'} className="flex items-center">
+                  {content.heroButtonText}
+                  <div className="ml-2 flex items-center justify-center transition-transform group-hover:translate-x-1">
+                    <ArrowRight size={16} className="text-white" />
+                  </div>
+                </Link>
+              </Button>
+            )}
           </div>
 
           <div
@@ -58,7 +58,7 @@ export function AboutHero() {
             )}
           >
             <Image
-              src="/website_owllow_colors.svg"
+              src={content.heroImage || "/website_owllow_colors.svg"}
               alt="About Owllow"
               fill
               className="object-contain scale-110 lg:scale-125"

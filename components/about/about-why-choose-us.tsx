@@ -1,11 +1,11 @@
 'use client';
 
 import { Container } from '@/components/ui/container';
-import { whyChooseUsItems } from '@/lib/about-data';
 import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
+import * as Icons from 'lucide-react';
 
-export function AboutWhyChooseUs() {
+export function AboutWhyChooseUs({ featuresData }: { featuresData?: any[] }) {
   const { ref, inView } = useInView({ threshold: 0.1 });
 
   return (
@@ -27,8 +27,8 @@ export function AboutWhyChooseUs() {
             inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}
         >
-          {whyChooseUsItems.map((item, i) => {
-            const Icon = item.icon;
+          {(featuresData || []).map((item, i) => {
+            const Icon = Icons[item.icon as keyof typeof Icons] || Icons.CheckCircle;
             return (
               <div
                 key={item.title}

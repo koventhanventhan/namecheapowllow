@@ -6,10 +6,11 @@ import Link from 'next/link';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from '@/components/ui/section-heading';
-import { services } from '@/lib/data';
+import * as Icons from 'lucide-react';
 
-export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }) {
+export function ServicesSection({ hideHeader = false, servicesData }: { hideHeader?: boolean, servicesData?: any[] }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -58,8 +59,9 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
           ref={scrollContainerRef}
           className={`${hideHeader ? 'mt-0' : 'mt-6 lg:mt-20'} relative w-full lg:pb-[10vh] flex lg:block overflow-x-auto lg:overflow-visible snap-x snap-mandatory gap-6 lg:gap-0 pb-8 lg:pb-0 px-4 sm:px-6 lg:px-0 -mx-4 sm:-mx-6 lg:mx-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth touch-pan-y`}
         >
-          {services.map((service, index) => {
-            const Icon = service.icon;
+          {(servicesData || []).map((service, index) => {
+            const Icon = Icons[service.icon as keyof typeof Icons] || Icons.HelpCircle;
+            const featuresList = typeof service.features === 'string' ? JSON.parse(service.features) : service.features;
             
             return (
               <div
@@ -105,14 +107,14 @@ export function ServicesSection({ hideHeader = false }: { hideHeader?: boolean }
                       </p>
 
                       <ul className="space-y-2 lg:space-y-4 mb-6 lg:mb-10 order-5 lg:order-4">
-                        {service.features.slice(0, 3).map((feature, i) => (
+                        {featuresList.slice(0, 3).map((feature: string, i: number) => (
                           <li key={i} className="flex items-start lg:items-center gap-2 lg:gap-3 text-muted-foreground lg:text-foreground font-medium text-xs sm:text-sm lg:text-base">
                             <span className="h-1.5 w-1.5 lg:h-2 lg:w-2 rounded-full bg-primary/40 lg:bg-primary mt-1.5 lg:mt-0 shrink-0" />
                             <span className="line-clamp-1">{feature}</span>
                           </li>
                         ))}
-                        {service.features.length > 3 && (
-                          <li className="text-xs text-primary font-medium pl-3.5 lg:hidden">+ {service.features.length - 3} more</li>
+                        {featuresList.length > 3 && (
+                          <li className="text-xs text-primary font-medium pl-3.5 lg:hidden">+ {featuresList.length - 3} more</li>
                         )}
                       </ul>
                     </div>

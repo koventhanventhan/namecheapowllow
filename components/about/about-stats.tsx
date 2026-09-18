@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import CountUp from 'react-countup';
 import { Container } from '@/components/ui/container';
-import { aboutStats } from '@/lib/about-data';
 import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
 
-export function AboutStats() {
+export function AboutStats({ stats }: { stats?: any[] }) {
   const { ref, inView } = useInView({ threshold: 0.2 });
+  const data = stats || [];
 
   return (
     <section className="relative overflow-hidden bg-background py-20 sm:py-28">
@@ -54,9 +54,9 @@ export function AboutStats() {
 
             {/* Stats Grid */}
             <div className="mt-10 grid grid-cols-2 gap-6">
-              {aboutStats.map((stat, i) => (
+              {data.map((stat, i) => (
                 <div
-                  key={stat.label}
+                  key={stat.id || stat.label}
                   className={cn(
                     'rounded-xl border border-border bg-card p-5 transition-all duration-500 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5',
                     inView

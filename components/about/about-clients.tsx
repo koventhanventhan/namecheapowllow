@@ -9,8 +9,9 @@ import { clientLogos } from '@/lib/about-data';
 import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
 
-export function AboutClients() {
+export function AboutClients({ clients }: { clients?: any[] }) {
   const { ref, inView } = useInView({ threshold: 0.1 });
+  const data = clients || [];
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-primary to-primary-900 py-20 sm:py-28">
@@ -29,9 +30,9 @@ export function AboutClients() {
           ref={ref}
           className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
         >
-          {clientLogos.map((client, i) => (
+          {data.map((client, i) => (
             <div
-              key={client.name}
+              key={client.id || client.name}
               className={cn(
                 'group flex flex-col items-center justify-center rounded-xl border border-border bg-background p-6 transition-all duration-500 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1',
                 inView

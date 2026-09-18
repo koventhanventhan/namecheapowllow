@@ -3,19 +3,17 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useKeenSlider } from 'keen-slider/react';
-import Lightbox from 'yet-another-react-lightbox';
+import Link from 'next/link';
 import 'keen-slider/keen-slider.min.css';
-import 'yet-another-react-lightbox/styles.css';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { portfolioItems } from '@/lib/data';
+import { Project } from '@prisma/client';
 
-export function PortfolioSection() {
+export function PortfolioSection({ items = [] }: { items?: Project[] }) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [lightboxIndex, setLightboxIndex] = useState(-1);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     mode: 'free-snap',
@@ -59,16 +57,16 @@ export function PortfolioSection() {
         </div>
 
         <div ref={sliderRef} className="keen-slider mt-14">
-          {portfolioItems.map((item, index) => (
+          {items.map((item, index) => (
             <div key={item.id} className="keen-slider__slide min-w-0">
               <div className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10">
-                <button
-                  onClick={() => setLightboxIndex(index)}
+                <Link
+                  href={`/projects/${item.slug}`}
                   className="relative block aspect-[4/3] w-full overflow-hidden text-left"
-                  aria-label={`View ${item.title} image`}
+                  aria-label={`View ${item.title} details`}
                 >
                   <Image
-                    src={item.image}
+                    src={item.imageUrl || '/placeholder.jpg'}
                     alt={item.title}
                     fill
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 32vw"
@@ -77,22 +75,22 @@ export function PortfolioSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                     <Badge className="border-0 bg-primary text-primary-foreground">
-                      {item.category}
+                      {item.category || 'Project'}
                     </Badge>
                     <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm opacity-0 transition-opacity group-hover:opacity-100">
                       <ExternalLink className="h-4 w-4" />
                     </div>
                   </div>
-                </button>
+                </Link>
                 <div className="p-5">
                   <h3 className="text-xl font-bold text-foreground dark:text-white">{item.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-2">
                     {item.description}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {item.tags.map((tag) => (
-                      <span key={tag} className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-                        {tag}
+                    {item.tags?.split(',').map((tag) => (
+                      <span key={tag.trim()} className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                        {tag.trim()}
                       </span>
                     ))}
                   </div>
@@ -103,7 +101,7 @@ export function PortfolioSection() {
         </div>
 
         <div className="mt-6 flex justify-center gap-1.5">
-          {portfolioItems.map((item, index) => (
+          {items.map((item, index) => (
             <button
               key={item.id}
               onClick={() => instanceRef.current?.moveToIdx(index)}
@@ -114,13 +112,6 @@ export function PortfolioSection() {
           ))}
         </div>
       </Container>
-
-      <Lightbox
-        open={lightboxIndex >= 0}
-        close={() => setLightboxIndex(-1)}
-        index={lightboxIndex}
-        slides={portfolioItems.map((item) => ({ src: item.image, alt: item.title }))}
-      />
     </section>
   );
 }
