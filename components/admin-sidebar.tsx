@@ -30,6 +30,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { useAdminTheme } from "@/components/admin-theme-provider";
+import { getCurrentAdminProfile } from "@/app/actions/auth";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const navItems = [
   { title: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -105,6 +108,15 @@ export function AdminSidebar() {
 // Top header bar (visible on all screens)
 export function AdminHeader() {
   const { theme, toggleTheme } = useAdminTheme();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    getCurrentAdminProfile().then((profile) => {
+      if (profile?.profileImage) {
+        setProfileImage(profile.profileImage);
+      }
+    });
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border dark:border-gray-800 bg-card px-4 py-3 shadow-sm">
@@ -141,13 +153,17 @@ export function AdminHeader() {
           </Button>
         </Link>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="rounded-full bg-secondary hover:bg-secondary/80">
-              <User className="h-5 w-5" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full relative overflow-hidden" aria-label="User menu">
+                {profileImage ? (
+                  <Image src={profileImage} alt="Profile" fill className="object-cover" />
+                ) : (
+                  <User className="h-5 w-5" />
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem asChild>
               <Link href="/admin/change-password" className="cursor-pointer w-full">
                 Change Password

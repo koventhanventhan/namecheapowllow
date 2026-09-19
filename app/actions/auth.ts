@@ -1,7 +1,8 @@
-﻿"use server";
+"use server";
 
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
@@ -124,4 +125,33 @@ export async function resetPassword(
   });
 
   return { success: true, message: "Password reset successfully. You can now log in." };
+}
+
+// Get Current Admin Profile (Logged-in admin)
+export async function getCurrentAdminProfile(): Promise<{ email: string; profileImage: string | null } | null> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.email) return null;
+
+  const user = await prisma.adminUser.findUnique({
+    where: { email: session.user.email },
+    select: { email: true, profileImage: true },
+  });
+
+  return user;
+}
+
+// Update Profile Image (Logged-in admin)
+export async function updateProfileImage(imageUrl: string): Promise<{ success: boolean; message: string }> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.email) {
+    return { success: false, message: "Unauthorized" };
+  }
+
+  await prisma.adminUser.update({
+    where: { email: session.user.email },
+    data: { profileImage: imageUrl },
+  });
+
+  revalidatePath('/admin');
+  return { success: true, message: "Profile picture updated successfully." };
 }
