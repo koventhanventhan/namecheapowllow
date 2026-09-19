@@ -169,9 +169,15 @@ export function AdminHeader() {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/admin/change-password" className="cursor-pointer w-full">
+              <Link href="/admin/profile" className="cursor-pointer w-full">
                 <User className="mr-2 h-4 w-4" />
-                Profile & Security
+                Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/admin/security" className="cursor-pointer w-full">
+                <KeyRound className="mr-2 h-4 w-4" />
+                Security
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
