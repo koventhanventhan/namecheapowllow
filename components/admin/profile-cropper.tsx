@@ -4,7 +4,6 @@ import { useState, useCallback } from "react";
 import Cropper, { Area } from "react-easy-crop";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { updateProfileImage } from "@/app/actions/auth";
 import { useRouter } from "next/navigation";
@@ -54,7 +53,6 @@ const getCroppedImg = async (
 
 export function ProfileCropper({ imageSrc, onClose, onSuccess }: ProfileCropperProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
@@ -119,28 +117,16 @@ export function ProfileCropper({ imageSrc, onClose, onSuccess }: ProfileCropperP
             <Cropper
               image={imageSrc}
               crop={crop}
-              zoom={zoom}
+              zoom={1}
               aspect={1}
               cropShape="round"
               showGrid={false}
               onCropChange={setCrop}
               onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
             />
           )}
         </div>
-        <div className="py-4 flex items-center space-x-4">
-          <span className="text-sm font-medium">Zoom</span>
-          <Slider
-            value={[zoom]}
-            min={1}
-            max={3}
-            step={0.1}
-            onValueChange={(val) => setZoom(val[0])}
-            className="flex-1"
-          />
-        </div>
-        <DialogFooter>
+        <DialogFooter className="mt-4">
           <Button variant="outline" onClick={onClose} disabled={isUploading}>
             Cancel
           </Button>

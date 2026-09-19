@@ -32,8 +32,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { useAdminTheme } from "@/components/admin-theme-provider";
-import { getCurrentAdminProfile } from "@/app/actions/auth";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const navItems = [
@@ -108,17 +106,8 @@ export function AdminSidebar() {
 }
 
 // Top header bar (visible on all screens)
-export function AdminHeader() {
+export function AdminHeader({ profileImage }: { profileImage?: string | null }) {
   const { theme, toggleTheme } = useAdminTheme();
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    getCurrentAdminProfile().then((profile) => {
-      if (profile?.profileImage) {
-        setProfileImage(profile.profileImage);
-      }
-    });
-  }, []);
 
   return (
     <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border dark:border-gray-800 bg-card px-4 py-3 shadow-sm">
