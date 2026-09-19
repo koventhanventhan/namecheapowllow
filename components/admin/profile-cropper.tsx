@@ -1,12 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import Cropper, { Area } from "react-easy-crop";
+import { useState, useRef } from "react";
+import ReactCrop, { type Crop, type PixelCrop, centerCrop, makeAspectCrop } from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { updateProfileImage } from "@/app/actions/auth";
 import { useRouter } from "next/navigation";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface ProfileCropperProps {
   imageSrc: string | null;
@@ -14,32 +17,50 @@ interface ProfileCropperProps {
   onSuccess: (newImageUrl: string) => void;
 }
 
+function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
+  return centerCrop(
+    makeAspectCrop(
+      {
+        unit: "%",
+        width: 90,
+      },
+      aspect,
+      mediaWidth,
+      mediaHeight
+    ),
+    mediaWidth,
+    mediaHeight
+  );
+}
+
 const getCroppedImg = async (
-  imageSrc: string,
-  pixelCrop: Area,
+  pixelCrop: PixelCrop,
+  imageRef: HTMLImageElement,
   maxWidth = 512
 ): Promise<Blob | null> => {
-  const image = await new Promise<HTMLImageElement>((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = (error) => reject(error);
-    img.src = imageSrc;
-  });
-
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
 
-  const size = Math.min(maxWidth, pixelCrop.width);
+  const scaleX = imageRef.naturalWidth / imageRef.width;
+  const scaleY = imageRef.naturalHeight / imageRef.height;
+
+  const cropX = pixelCrop.x * scaleX;
+  const cropY = pixelCrop.y * scaleY;
+  const cropWidth = pixelCrop.width * scaleX;
+  const cropHeight = pixelCrop.height * scaleY;
+
+  // For 1:1 aspect, width and height are same. If not, use Math.min
+  const size = Math.min(maxWidth, cropWidth, cropHeight);
   canvas.width = size;
   canvas.height = size;
 
   ctx.drawImage(
-    image,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
+    imageRef,
+    cropX,
+    cropY,
+    cropWidth,
+    cropHeight,
     0,
     0,
     size,
@@ -52,22 +73,25 @@ const getCroppedImg = async (
 };
 
 export function ProfileCropper({ imageSrc, onClose, onSuccess }: ProfileCropperProps) {
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+  const [crop, setCrop] = useState<Crop>();
+  const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [isUploading, setIsUploading] = useState(false);
+  const [isAspectLocked, setIsAspectLocked] = useState(true);
+  const imgRef = useRef<HTMLImageElement>(null);
   const { toast } = useToast();
   const router = useRouter();
 
-  const onCropComplete = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
+  function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
+    const { width, height } = e.currentTarget;
+    setCrop(centerAspectCrop(width, height, 1));
+  }
 
   const handleSave = async () => {
-    if (!imageSrc || !croppedAreaPixels) return;
+    if (!completedCrop || !imgRef.current) return;
 
     setIsUploading(true);
     try {
-      const croppedBlob = await getCroppedImg(imageSrc, croppedAreaPixels);
+      const croppedBlob = await getCroppedImg(completedCrop, imgRef.current);
       if (!croppedBlob) throw new Error("Failed to crop image.");
 
       const formData = new FormData();
@@ -112,20 +136,37 @@ export function ProfileCropper({ imageSrc, onClose, onSuccess }: ProfileCropperP
         <DialogHeader>
           <DialogTitle>Crop Profile Picture</DialogTitle>
         </DialogHeader>
-        <div className="relative w-full h-64 bg-black rounded-md overflow-hidden">
+        
+        <div className="flex items-center space-x-2 pb-2">
+          <Switch
+            id="aspect-lock"
+            checked={isAspectLocked}
+            onCheckedChange={setIsAspectLocked}
+          />
+          <Label htmlFor="aspect-lock">Lock aspect ratio 1:1</Label>
+        </div>
+
+        <div className="relative w-full h-auto max-h-[60vh] bg-black rounded-md overflow-hidden flex items-center justify-center">
           {imageSrc && (
-            <Cropper
-              image={imageSrc}
+            <ReactCrop
               crop={crop}
-              zoom={1}
-              aspect={1}
-              cropShape="round"
-              showGrid={false}
-              onCropChange={setCrop}
-              onCropComplete={onCropComplete}
-            />
+              onChange={(_, percentCrop) => setCrop(percentCrop)}
+              onComplete={(c) => setCompletedCrop(c)}
+              aspect={isAspectLocked ? 1 : undefined}
+              circularCrop={isAspectLocked} // Circular preview if locked to 1:1
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                ref={imgRef}
+                alt="Crop me"
+                src={imageSrc}
+                onLoad={onImageLoad}
+                className="max-h-[60vh] w-auto object-contain"
+              />
+            </ReactCrop>
           )}
         </div>
+
         <DialogFooter className="mt-4">
           <Button variant="outline" onClick={onClose} disabled={isUploading}>
             Cancel

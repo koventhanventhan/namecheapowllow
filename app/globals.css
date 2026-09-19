@@ -346,3 +346,12 @@ body {
     animation: none !important;
   }
 }
+
+/* ReactCrop Custom Styling */
+.dark .ReactCrop__drag-handle {
+  background-color: hsl(var(--foreground)) !important;
+  border: 1px solid hsl(var(--background)) !important;
+}
+.dark .ReactCrop__crop-selection {
+  border: 1px solid hsl(var(--primary)) !important;
+}
