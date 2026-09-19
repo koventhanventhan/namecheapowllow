@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageCropperUpload } from "@/components/admin/image-cropper-upload";
 import { createBlogPost, updateBlogPost } from "@/app/actions/blog";
 import { BlogPost } from "@prisma/client";
 
@@ -31,7 +32,6 @@ const formSchema = z.object({
 export function BlogForm({ initialData }: { initialData?: BlogPost }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,30 +45,7 @@ export function BlogForm({ initialData }: { initialData?: BlogPost }) {
     },
   });
 
-  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
 
-    setUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.url) {
-        form.setValue("coverImage", data.url);
-      }
-    } catch (err) {
-      console.error("Upload failed", err);
-      alert("Failed to upload image");
-    } finally {
-      setUploading(false);
-    }
-  }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -143,29 +120,21 @@ export function BlogForm({ initialData }: { initialData?: BlogPost }) {
           )}
         />
         
-        <div className="space-y-2">
-          <FormLabel>Cover Image Upload</FormLabel>
-          <div className="flex items-center gap-4">
-            <Input type="file" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
-            {uploading && <span className="text-sm text-muted-foreground">Uploading...</span>}
-          </div>
-        </div>
-
         <FormField
           control={form.control}
           name="coverImage"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Or enter Image URL manually</FormLabel>
               <FormControl>
-                <Input placeholder="/uploads/..." {...field} />
+                <ImageCropperUpload
+                  value={field.value}
+                  onChange={field.onChange}
+                  aspect={16 / 9}
+                  label="Cover Image"
+                  recommendedSize="Recommended: 1200x630px (16:9)"
+                />
               </FormControl>
               <FormMessage />
-              {field.value && (
-                <div className="mt-2">
-                  <img src={field.value} alt="Preview" className="h-32 object-cover rounded-md" />
-                </div>
-              )}
             </FormItem>
           )}
         />

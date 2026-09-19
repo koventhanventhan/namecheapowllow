@@ -7,11 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { ImageCropperUpload } from "@/components/admin/image-cropper-upload";
 
 export function ServiceForm({ initialData }: { initialData?: any }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [image, setImage] = useState(initialData?.image || '');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,8 +72,14 @@ export function ServiceForm({ initialData }: { initialData?: any }) {
             <Input id="icon" name="icon" defaultValue={initialData?.icon} required placeholder="e.g. Code" />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="image">Image URL</Label>
-            <Input id="image" name="image" defaultValue={initialData?.image || ''} placeholder="e.g. /owllow_web_developement.webp" />
+            <ImageCropperUpload
+              name="image"
+              value={image}
+              onChange={setImage}
+              aspect={1}
+              label="Service Image"
+              recommendedSize="Recommended: 800x800px (1:1)"
+            />
           </div>
         </div>
 

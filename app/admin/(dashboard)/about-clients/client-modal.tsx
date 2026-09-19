@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ImageCropperUpload } from "@/components/admin/image-cropper-upload";
 import { createClientLogo, updateClientLogo } from '@/app/actions/about';
 
 export function ClientLogoModal({ isOpen, onClose, initialData }: { isOpen: boolean; onClose: () => void; initialData?: any }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [image, setImage] = useState(initialData?.image || '');
 
   useEffect(() => {
     if (!isOpen) {
@@ -63,8 +65,15 @@ export function ClientLogoModal({ isOpen, onClose, initialData }: { isOpen: bool
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="image">Image URL (optional)</Label>
-            <Input id="image" name="image" defaultValue={initialData?.image || ''} placeholder="/owllow_client.png" />
+            <ImageCropperUpload
+              name="image"
+              value={image}
+              onChange={setImage}
+              aspect={1}
+              cropShape="round"
+              label="Client Logo"
+              recommendedSize="Recommended: 400x400px (1:1)"
+            />
           </div>
 
           <div className="flex justify-end gap-2 pt-4">

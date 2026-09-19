@@ -7,11 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { ImageCropperUpload } from "@/components/admin/image-cropper-upload";
 
 export function AboutContentForm({ initialData }: { initialData: any }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [heroImage, setHeroImage] = useState(initialData.heroImage || '');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -58,8 +60,14 @@ export function AboutContentForm({ initialData }: { initialData: any }) {
           <Textarea id="heroDescription" name="heroDescription" rows={4} defaultValue={initialData.heroDescription} required />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="heroImage">Hero Image URL</Label>
-          <Input id="heroImage" name="heroImage" defaultValue={initialData.heroImage} required />
+          <ImageCropperUpload
+            name="heroImage"
+            value={heroImage}
+            onChange={setHeroImage}
+            aspect={16 / 9}
+            label="Hero Image"
+            recommendedSize="Recommended: 1920x1080px (16:9)"
+          />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid gap-2">
