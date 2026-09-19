@@ -27,6 +27,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { useAdminTheme } from "@/components/admin-theme-provider";
@@ -164,9 +166,12 @@ export function AdminHeader() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/admin/change-password" className="cursor-pointer w-full">
-                Change Password
+                <User className="mr-2 h-4 w-4" />
+                Profile & Security
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
