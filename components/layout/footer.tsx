@@ -45,6 +45,10 @@ export async function Footer() {
     ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9+]/g, '')}`
     : 'https://wa.me/+94767206279';
 
+  const isValidSocialLink = (link?: string | null) => {
+    return link && link.trim() !== '' && link.trim() !== '#';
+  };
+
   return (
     <>
       <footer className="relative w-full bg-card font-sans border-t border-border">
@@ -149,23 +153,23 @@ export async function Footer() {
               </div>
 
               <div className="flex items-center gap-3">
-                {settings?.socialFacebook && settings.socialFacebook !== '#' && (
-                  <a href={settings.socialFacebook} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                {isValidSocialLink(settings?.socialFacebook) && (
+                  <a href={settings!.socialFacebook!} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                     <FaFacebookF className="w-4 h-4" />
                   </a>
                 )}
-                {settings?.socialInstagram && settings.socialInstagram !== '#' && (
-                  <a href={settings.socialInstagram} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                {isValidSocialLink(settings?.socialInstagram) && (
+                  <a href={settings!.socialInstagram!} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                     <FaInstagram className="w-4 h-4" />
                   </a>
                 )}
-                {settings?.socialLinkedin && settings.socialLinkedin !== '#' && (
-                  <a href={settings.socialLinkedin} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                {isValidSocialLink(settings?.socialLinkedin) && (
+                  <a href={settings!.socialLinkedin!} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                     <FaLinkedinIn className="w-4 h-4" />
                   </a>
                 )}
-                {settings?.socialTwitter && settings.socialTwitter !== '#' && (
-                  <a href={settings.socialTwitter} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                {isValidSocialLink(settings?.socialTwitter) && (
+                  <a href={settings!.socialTwitter!} className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground hover:scale-110" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                     <FaXTwitter className="w-4 h-4" />
                   </a>
                 )}

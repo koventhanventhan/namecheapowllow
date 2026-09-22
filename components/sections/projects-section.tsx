@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
@@ -35,17 +35,22 @@ export function ProjectsSection({ isPageHeader = false, projects = [] }: Project
             isRevealed ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
           )}
         >
-          {projects.map((item, index) => (
-            <Link
-              key={item.id}
-              href={`/projects/${item.slug}`}
-              className="group block relative overflow-hidden rounded-2xl bg-card border border-border shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-1"
-              style={{
-                transitionDelay: isRevealed ? `${index * 100}ms` : '0ms'
-              }}
-            >
-              {/* Image Container with Zoom effect */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
+          {projects.map((item, index) => {
+            const isPlaceholder = item.slug === '#' || item.slug === '' || item.title.toLowerCase().includes('coming soon');
+            const CardWrapper = isPlaceholder ? 'div' : Link;
+            const linkProps = isPlaceholder ? {} : { href: `/projects/${item.slug}` };
+
+            return (
+              <CardWrapper
+                key={item.id}
+                {...linkProps as any}
+                className="group block relative overflow-hidden rounded-2xl bg-card border border-border shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-1"
+                style={{
+                  transitionDelay: isRevealed ? `${index * 100}ms` : '0ms'
+                }}
+              >
+                {/* Image Container with Zoom effect */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
                   src={item.imageUrl || '/placeholder.jpg'}
                   alt={item.title}
@@ -84,8 +89,15 @@ export function ProjectsSection({ isPageHeader = false, projects = [] }: Project
                   </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            </CardWrapper>
+          );
+          })}
+        </div>
+
+        <div className="mt-16 text-center">
+          <Link href="/projects" className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90">
+            View All Projects <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
         </div>
       </Container>
     </section>

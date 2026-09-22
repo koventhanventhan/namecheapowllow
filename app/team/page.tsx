@@ -4,6 +4,9 @@ import { PageLayout } from '@/components/layout/page-layout';
 export const metadata: Metadata = {
   title: 'Our Team | Owllow IT',
   description: 'Meet the diverse team of strategists, engineers, and innovators at Owllow IT who solve complex technology challenges.',
+  alternates: {
+    canonical: '/team',
+  },
 };
 import { TeamSection } from '@/components/sections/team-section';
 

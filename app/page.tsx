@@ -3,7 +3,14 @@ import { Footer } from '@/components/layout/footer';
 import { HeroSection } from '@/components/sections/hero-section';
 import { ServicesSection } from '@/components/sections/services-section';
 import dynamic from 'next/dynamic';
+import { Metadata } from 'next';
 import { PrismaClient } from '@prisma/client';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 const prisma = new PrismaClient();
 

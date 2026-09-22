@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://owllow.com'),
   title: 'Owllow IT Solutions | Enterprise IT Consulting & Technology Services',
   description:
-    'Owllow IT Solutions delivers enterprise-grade IT consulting, cloud infrastructure, cybersecurity, software development, and managed services. Transform your business with cutting-edge technology.',
+    'Owllow IT Solutions provides enterprise IT consulting, cloud infrastructure, cybersecurity, and software development. Transform your business with us.',
   keywords: [
     'IT solutions',
     'IT consulting',
@@ -38,12 +38,14 @@ export const metadata: Metadata = {
     description:
       'Enterprise-grade IT consulting, cloud infrastructure, cybersecurity, and software development services.',
     type: 'website',
+    images: ['/owllow_logo_transparent_hires.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Owllow IT Solutions',
     description:
       'Enterprise-grade IT consulting, cloud infrastructure, cybersecurity, and software development services.',
+    images: ['/owllow_logo_transparent_hires.png'],
   },
 };
 

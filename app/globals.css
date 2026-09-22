@@ -9,7 +9,7 @@
 }
 
 @layer base {
-  :root {
+  :root, .light {
     --background: 0 0% 100%;
     --foreground: 198 11% 18%;
     /* #282F32 */

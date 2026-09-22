@@ -11,6 +11,9 @@ const prisma = new PrismaClient();
 export const metadata: Metadata = {
   title: 'Services We Provide | Owllow Studio',
   description: 'Designing Experiences, Elevating Brands. Explore our comprehensive services including Branding, UX/UI Design, SEO, Development, Motion, and AI.',
+  alternates: {
+    canonical: '/services',
+  },
 };
 
 export default async function ServicesPage() {

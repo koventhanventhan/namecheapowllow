@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import { PageLayout } from '@/components/layout/page-layout';
 import { Container } from '@/components/ui/container';
@@ -17,6 +18,19 @@ export async function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.slug,
   }));
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const project = await prisma.project.findUnique({
+    where: { slug: params.slug },
+  });
+  return {
+    title: project ? `${project.title} | Owllow IT Projects` : 'Project Details',
+    description: project?.description || 'Explore our latest project details.',
+    alternates: {
+      canonical: `/projects/${params.slug}`,
+    },
+  };
 }
 
 export default async function ProjectPage({ params }: { params: { slug: string } }) {

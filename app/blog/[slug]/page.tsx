@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import { PageLayout } from '@/components/layout/page-layout';
 import { Container } from '@/components/ui/container';
@@ -15,6 +16,19 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = await prisma.blogPost.findUnique({
+    where: { slug: params.slug },
+  });
+  return {
+    title: post ? `${post.title} | Owllow IT Blog` : 'Blog Post',
+    description: post?.excerpt || 'Read our latest blog post on Owllow IT Solutions.',
+    alternates: {
+      canonical: `/blog/${params.slug}`,
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
@@ -74,6 +88,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             ) : (
               <p className="text-muted-foreground italic">This post has no content.</p>
             )}
+          </div>
+          
+          <div className="mt-16 pt-8 border-t border-border text-center">
+            <h3 className="text-xl font-bold mb-4">Looking for customized IT solutions?</h3>
+            <p className="text-muted-foreground mb-6">Discover how our expert team can help transform your business operations.</p>
+            <Link href="/services" className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90">
+              Explore Our Services
+            </Link>
           </div>
         </Container>
       </article>

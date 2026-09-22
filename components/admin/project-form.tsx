@@ -30,6 +30,7 @@ const formSchema = z.object({
   liveUrl: z.string().optional(),
   imageUrl: z.string().optional(),
   featured: z.boolean().default(false),
+  order: z.coerce.number().int().min(0, "Priority must be 0 or greater").default(0),
 });
 
 export function ProjectForm({ initialData }: { initialData?: Project }) {
@@ -47,6 +48,7 @@ export function ProjectForm({ initialData }: { initialData?: Project }) {
       liveUrl: initialData?.liveUrl || "",
       imageUrl: initialData?.imageUrl || "",
       featured: initialData?.featured || false,
+      order: initialData?.order ?? 0,
     },
   });
 
@@ -126,6 +128,28 @@ export function ProjectForm({ initialData }: { initialData?: Project }) {
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="order"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Priority (Display Order)</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  min={0}
+                  placeholder="e.g. 1 (lower = shown first)"
+                  {...field}
+                />
+              </FormControl>
+              <div className="text-sm text-muted-foreground">
+                Lower number = displayed first in the portfolio. Use 1, 2, 3… to control order.
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         
         <FormField
           control={form.control}

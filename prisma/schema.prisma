@@ -30,6 +30,7 @@ model Project {
   tags        String?  // Stored as JSON string or comma-separated
   liveUrl     String?
   featured    Boolean  @default(false)
+  order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

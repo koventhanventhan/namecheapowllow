@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: 'About Us | Owllow',
   description:
     'Learn more about Owllow — a leading web development and digital marketing company. Discover our services, team, and projects.',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default async function AboutPage() {

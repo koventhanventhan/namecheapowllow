@@ -7,6 +7,9 @@ const prisma = new PrismaClient();
 export const metadata: Metadata = {
   title: 'Blog & Insights | Owllow IT',
   description: 'Ideas, Insights & Inspiration — Stay ahead of the curve with the latest technology trends.',
+  alternates: {
+    canonical: '/blog',
+  },
 };
 
 export default async function BlogPage() {

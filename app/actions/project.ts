@@ -14,6 +14,7 @@ export async function createProject(data: {
   liveUrl?: string;
   imageUrl?: string;
   featured?: boolean;
+  order?: number;
 }) {
   const project = await prisma.project.create({
     data: {
@@ -22,6 +23,7 @@ export async function createProject(data: {
   });
   revalidatePath("/admin/projects");
   revalidatePath("/projects");
+  revalidatePath(`/projects/${project.slug}`);
   revalidatePath("/portfolio");
   return project;
 }
@@ -35,6 +37,7 @@ export async function updateProject(id: string, data: Partial<{
   liveUrl: string;
   imageUrl: string;
   featured: boolean;
+  order: number;
 }>) {
   const project = await prisma.project.update({
     where: { id },
@@ -42,6 +45,7 @@ export async function updateProject(id: string, data: Partial<{
   });
   revalidatePath("/admin/projects");
   revalidatePath("/projects");
+  revalidatePath(`/projects/${project.slug}`);
   revalidatePath("/portfolio");
   return project;
 }
@@ -52,6 +56,7 @@ export async function deleteProject(id: string) {
   });
   revalidatePath("/admin/projects");
   revalidatePath("/projects");
+  revalidatePath(`/projects/${project.slug}`);
   revalidatePath("/portfolio");
   return project;
 }

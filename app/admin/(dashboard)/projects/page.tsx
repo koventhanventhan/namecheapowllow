@@ -11,13 +11,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { deleteProject } from "@/app/actions/project";
-import { revalidatePath } from "next/cache";
 
 const prisma = new PrismaClient();
 
 export default async function AdminProjectsPage() {
   const projects = await prisma.project.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { order: "asc" },
   });
 
   return (
@@ -26,7 +25,9 @@ export default async function AdminProjectsPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
           <p className="text-muted-foreground mt-2">
-            Manage your portfolio projects here.
+            Manage your portfolio projects here. Projects are displayed in{" "}
+            <span className="font-semibold text-foreground">Priority order</span>{" "}
+            (lower number = shown first).
           </p>
         </div>
         <Link href="/admin/projects/new">
@@ -41,6 +42,7 @@ export default async function AdminProjectsPage() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-24 text-center">Priority</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Featured</TableHead>
@@ -50,13 +52,18 @@ export default async function AdminProjectsPage() {
           <TableBody>
             {projects.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                   No projects found.
                 </TableCell>
               </TableRow>
             ) : (
               projects.map((project) => (
                 <TableRow key={project.id}>
+                  <TableCell className="text-center">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary text-sm font-bold border border-primary/20">
+                      {project.order}
+                    </span>
+                  </TableCell>
                   <TableCell className="font-medium">{project.title}</TableCell>
                   <TableCell>{project.category}</TableCell>
                   <TableCell>{project.featured ? "Yes" : "No"}</TableCell>

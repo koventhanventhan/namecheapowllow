@@ -126,10 +126,10 @@ export function BlogClient({ posts = [] }: { posts: BlogPost[] }) {
             
             {/* Nav Links */}
             <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-b border-border pb-4 opacity-0 fade-in-up delay-300">
-              <Link href="#" className="nav-link-animated text-sm font-semibold text-foreground">All Articles</Link>
-              <Link href="#" className="nav-link-animated text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Cloud Solutions</Link>
-              <Link href="#" className="nav-link-animated text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Cybersecurity</Link>
-              <Link href="#" className="nav-link-animated text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Software Dev</Link>
+              <Link href="/blog" className="nav-link-animated text-sm font-semibold text-foreground">All Articles</Link>
+              <Link href="/blog?category=cloud" className="nav-link-animated text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Cloud Solutions</Link>
+              <Link href="/blog?category=security" className="nav-link-animated text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Cybersecurity</Link>
+              <Link href="/blog?category=development" className="nav-link-animated text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Software Dev</Link>
             </div>
           </Container>
         </section>
