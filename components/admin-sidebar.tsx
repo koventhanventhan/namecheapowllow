@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -99,7 +100,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 // Desktop permanent sidebar
 export function AdminSidebar() {
   return (
-    <aside className="hidden lg:flex w-64 flex-shrink-0 flex-col border-r border-border dark:border-gray-800 bg-card min-h-screen shadow-sm">
+    <aside className="hidden lg:flex w-64 flex-shrink-0 flex-col border-r border-border bg-card min-h-screen shadow-sm">
       <SidebarContent />
     </aside>
   );
@@ -108,19 +109,31 @@ export function AdminSidebar() {
 // Top header bar (visible on all screens)
 export function AdminHeader({ profileImage }: { profileImage?: string | null }) {
   const { theme, toggleTheme } = useAdminTheme();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Close mobile menu if window resizes to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border dark:border-gray-800 bg-card px-4 py-3 shadow-sm">
+    <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border bg-card px-4 py-3 shadow-sm">
       <div className="flex items-center gap-3">
         <div className="lg:hidden">
-          <Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="Open menu">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-72 p-0">
-              <SidebarContent />
+              <SidebarContent onNavigate={() => setIsMobileMenuOpen(false)} />
             </SheetContent>
           </Sheet>
         </div>

@@ -9,7 +9,7 @@ export default async function AdminDashboardLayout({
   const profile = await getCurrentAdminProfile();
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-background">
       {/* Desktop sidebar - hidden on mobile */}
       <AdminSidebar />
       {/* Wrapper for header + main content */}
