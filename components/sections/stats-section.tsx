@@ -1,9 +1,13 @@
 'use client';
 
 import { Container } from '@/components/ui/container';
-import { stats } from '@/lib/data';
+import { AboutStat } from '@prisma/client';
 
-export function StatsSection() {
+interface StatsSectionProps {
+  stats: AboutStat[];
+}
+
+export function StatsSection({ stats = [] }: StatsSectionProps) {
   return (
     <section className="py-12 lg:py-24 bg-background">
       <Container>
@@ -35,9 +39,6 @@ export function StatsSection() {
                     <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground" />
                     {stat.label}
                   </div>
-                </div>
-                <div className="h-12 w-12 text-primary-foreground/60 shrink-0">
-                  <stat.icon className="w-full h-full" />
                 </div>
               </div>
             ))}

@@ -7,9 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
 export function HeroForm({ initialData }: { initialData: any }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +31,11 @@ export function HeroForm({ initialData }: { initialData: any }) {
       setError(result.error);
     } else {
       router.refresh();
-      alert('Hero content updated successfully!');
+      toast({
+        variant: "success",
+        title: "Saved",
+        description: "Hero content updated successfully"
+      });
     }
   };
 

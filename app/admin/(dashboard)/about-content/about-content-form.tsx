@@ -8,9 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { ImageCropperUpload } from "@/components/admin/image-cropper-upload";
+import { useToast } from '@/hooks/use-toast';
 
 export function AboutContentForm({ initialData }: { initialData: any }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [heroImage, setHeroImage] = useState(initialData.heroImage || '');
@@ -36,7 +38,11 @@ export function AboutContentForm({ initialData }: { initialData: any }) {
       setError(result.error);
     } else {
       router.refresh();
-      alert('Content updated successfully!');
+      toast({
+        variant: "success",
+        title: "Saved",
+        description: "Content updated successfully"
+      });
     }
   };
 

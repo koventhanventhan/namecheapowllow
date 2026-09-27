@@ -51,6 +51,10 @@ export default async function Home() {
   const featuresData = await prisma.whyChooseUsItem.findMany({
     orderBy: { order: 'asc' },
   });
+  
+  const testimonialsData = await prisma.testimonial.findMany({
+    orderBy: { order: 'asc' },
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -62,7 +66,7 @@ export default async function Home() {
         <WhyChooseUsSection featuresData={featuresData} />
 
         <ProjectsSection projects={projects} />
-        <TestimonialsSection />
+        <TestimonialsSection testimonials={testimonialsData} />
         <CtaSection />
       </main>
       <Footer />

@@ -26,22 +26,39 @@ export function AdminThemeProvider({ children }: { children: React.ReactNode }) 
     }
   }, []);
 
+  useEffect(() => {
+    if (!mounted) return;
+    const root = document.documentElement;
+    
+    // Apply admin theme to html
+    root.classList.remove("light", "dark");
+    root.classList.add(theme);
+    root.style.colorScheme = theme;
+
+    // Cleanup: restore global theme when admin unmounts
+    return () => {
+      const globalTheme = localStorage.getItem("theme") || "light";
+      root.classList.remove("light", "dark");
+      if (globalTheme === "dark" || globalTheme === "light") {
+        root.classList.add(globalTheme);
+        root.style.colorScheme = globalTheme;
+      }
+    };
+  }, [theme, mounted]);
+
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("admin-theme", newTheme);
   };
 
-  // Prevent hydration mismatch by not rendering the theme class until mounted
   if (!mounted) {
-    return <div style={{ display: "contents" }}>{children}</div>;
+    return <>{children}</>;
   }
 
   return (
     <AdminThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={theme === "dark" ? "dark" : "light"} style={{ display: "contents" }}>
-        {children}
-      </div>
+      {children}
     </AdminThemeContext.Provider>
   );
 }

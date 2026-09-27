@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { ImageCropperUpload } from "@/components/admin/image-cropper-upload";
 import { createProject, updateProject } from "@/app/actions/project";
 import { Project } from "@prisma/client";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -35,6 +36,7 @@ const formSchema = z.object({
 
 export function ProjectForm({ initialData }: { initialData?: Project }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -65,7 +67,11 @@ export function ProjectForm({ initialData }: { initialData?: Project }) {
       router.push("/admin/projects");
     } catch (error) {
       console.error("Failed to save project", error);
-      alert("Failed to save project");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to save project"
+      });
     } finally {
       setIsLoading(false);
     }

@@ -12,9 +12,10 @@ import { Label } from '@/components/ui/label';
 
 interface ContactSectionProps {
   isPageHeader?: boolean;
+  settings?: any;
 }
 
-export function ContactSection({ isPageHeader = false }: ContactSectionProps = {}) {
+export function ContactSection({ isPageHeader = false, settings }: ContactSectionProps = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -113,13 +114,13 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
               <h3 className="text-xl font-bold text-foreground">Get in touch</h3>
               <p className="mt-2 text-sm text-muted-foreground">Have a question or ready to start? Our team is here to help.</p>
               <div className="mt-8 space-y-5">
-                <a href="mailto:info@owllow.com" className="flex items-start gap-3 group hover:opacity-80 transition-opacity">
+                <a href={`mailto:${settings?.email || 'info@owllow.com'}`} className="flex items-start gap-3 group hover:opacity-80 transition-opacity">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">Email</p>
-                    <p className="text-sm text-muted-foreground">info@owllow.com</p>
+                    <p className="text-sm text-muted-foreground">{settings?.email || 'info@owllow.com'}</p>
                   </div>
                 </a>
 
@@ -129,22 +130,36 @@ export function ContactSection({ isPageHeader = false }: ContactSectionProps = {
                   </div>
                   <div className="flex flex-col gap-1">
                     <p className="text-sm font-semibold text-foreground">Phone</p>
-                    <a href="https://wa.me/+94767206279" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                      +94 (76) 720-6279
-                    </a>
-                    <a href="tel:+64223672717" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                      +64 (22) 367-2717
-                    </a>
+                    {settings?.whatsappNumber && (
+                      <a href={`https://wa.me/${settings.whatsappNumber.replace(/[^0-9+]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                        {settings.whatsappNumber}
+                      </a>
+                    )}
+                    {settings?.phone && settings.phone.split('\n').map((p: string, i: number) => (
+                      <a key={i} href={`tel:${p.replace(/[^0-9+]/g, '')}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                        {p}
+                      </a>
+                    ))}
+                    {!settings?.whatsappNumber && !settings?.phone && (
+                      <>
+                        <a href="https://wa.me/+94767206279" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                          +94 (76) 720-6279
+                        </a>
+                        <a href="tel:+64223672717" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                          +64 (22) 367-2717
+                        </a>
+                      </>
+                    )}
                   </div>
                 </div>
 
-                <a href="https://maps.google.com/?q=Kuppilan+North,+Erlalai,+Jaffna,+Sri+Lanka" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group hover:opacity-80 transition-opacity">
+                <a href={`https://maps.google.com/?q=${encodeURIComponent(settings?.address || 'Kuppilan North, Erlalai, Jaffna, Sri Lanka')}`} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group hover:opacity-80 transition-opacity">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">Office</p>
-                    <p className="text-sm text-muted-foreground">Kuppilan North, Erlalai, Jaffna, Sri Lanka</p>
+                    <p className="text-sm text-muted-foreground">{settings?.address || 'Kuppilan North, Erlalai, Jaffna, Sri Lanka'}</p>
                   </div>
                 </a>
               </div>

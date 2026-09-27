@@ -9,8 +9,11 @@ export const metadata: Metadata = {
   },
 };
 import { TeamSection } from '@/components/sections/team-section';
+import { PrismaClient } from '@prisma/client';
 
-export default function TeamPage() {
+const prisma = new PrismaClient();
+
+export default async function TeamPage() {
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
@@ -18,6 +21,10 @@ export default function TeamPage() {
     description: 'Meet the diverse team of strategists, engineers, and innovators at Owllow IT.',
     url: 'https://owllow.com/team',
   };
+  
+  const teamMembersData = await prisma.teamMember.findMany({
+    orderBy: { order: 'asc' },
+  });
 
   return (
     <PageLayout>
@@ -25,7 +32,7 @@ export default function TeamPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
-      <TeamSection isPageHeader />
+      <TeamSection isPageHeader teamMembers={teamMembersData} />
     </PageLayout>
   );
 }

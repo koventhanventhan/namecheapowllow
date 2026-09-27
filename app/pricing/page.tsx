@@ -9,8 +9,11 @@ export const metadata: Metadata = {
   },
 };
 import { PricingSection } from '@/components/sections/pricing-section';
+import { PrismaClient } from '@prisma/client';
 
-export default function PricingPage() {
+const prisma = new PrismaClient();
+
+export default async function PricingPage() {
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -18,6 +21,10 @@ export default function PricingPage() {
     description: 'Transparent, flexible pricing for our IT solutions.',
     url: 'https://owllow.com/pricing',
   };
+  
+  const pricingPlansData = await prisma.pricingPlan.findMany({
+    orderBy: { order: 'asc' },
+  });
 
   return (
     <PageLayout>
@@ -25,7 +32,7 @@ export default function PricingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
-      <PricingSection isPageHeader />
+      <PricingSection isPageHeader pricingPlans={pricingPlansData} />
     </PageLayout>
   );
 }

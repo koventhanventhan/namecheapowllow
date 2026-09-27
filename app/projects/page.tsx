@@ -19,13 +19,17 @@ export default async function ProjectsPage() {
   const projects = await prisma.project.findMany({
     orderBy: { createdAt: 'desc' },
   });
+  
+  const testimonialsData = await prisma.testimonial.findMany({
+    orderBy: { order: 'asc' },
+  });
 
   return (
     <PageLayout showCta={false}>
       <div className="pt-24">
         <ProjectsSection isPageHeader projects={projects} />
       </div>
-      <TestimonialsSection />
+      <TestimonialsSection testimonials={testimonialsData} />
       <ProjectCtaSection />
     </PageLayout>
   );

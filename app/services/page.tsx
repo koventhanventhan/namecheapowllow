@@ -20,6 +20,10 @@ export default async function ServicesPage() {
   const servicesData = await prisma.service.findMany({
     orderBy: { order: 'asc' },
   });
+  
+  const statsData = await prisma.aboutStat.findMany({
+    orderBy: { order: 'asc' },
+  });
 
   const servicesSchema = {
     '@context': 'https://schema.org',
@@ -80,7 +84,7 @@ export default async function ServicesPage() {
       </section>
 
       <ServicesSection hideHeader={true} servicesData={servicesData} />
-      <StatsSection />
+      <StatsSection stats={statsData} />
       <FaqSection />
     </PageLayout>
   );
