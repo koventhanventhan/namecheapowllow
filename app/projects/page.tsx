@@ -1,35 +1,39 @@
 import { Metadata } from 'next';
 import { PageLayout } from '@/components/layout/page-layout';
 import { ProjectsSection } from '@/components/sections/projects-section';
-import { TestimonialsSection } from '@/components/sections/testimonials-section';
+
 import { ProjectCtaSection } from '@/components/sections/project-cta-section';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const metadata: Metadata = {
-  title: 'Our Projects | Owllow IT',
-  description: 'Explore our latest portfolio of technology solutions and recent projects.',
-  alternates: {
-    canonical: '/projects',
-  },
-};
+import { getSeoMeta } from '@/app/actions/seo';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMeta('projects');
+  return {
+    title: seo?.title || 'Our Projects | Owllow IT',
+    description: seo?.description || 'Explore our latest portfolio of technology solutions and recent projects.',
+    keywords: seo?.keywords || undefined,
+    alternates: {
+      canonical: '/projects',
+    },
+  };
+}
 
 export default async function ProjectsPage() {
   const projects = await prisma.project.findMany({
     orderBy: { createdAt: 'desc' },
   });
   
-  const testimonialsData = await prisma.testimonial.findMany({
-    orderBy: { order: 'asc' },
-  });
+
 
   return (
     <PageLayout showCta={false}>
       <div className="pt-24">
         <ProjectsSection isPageHeader projects={projects} />
       </div>
-      <TestimonialsSection testimonials={testimonialsData} />
+
       <ProjectCtaSection />
     </PageLayout>
   );

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, CalendarDays, Clock, Search, Tag, ChevronRight } from 'lucide-react';
-import { PageLayout } from '@/components/layout/page-layout';
+
 import { Container } from '@/components/ui/container';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -105,7 +105,7 @@ export function BlogClient({ posts = [] }: { posts: BlogPost[] }) {
   };
 
   return (
-    <PageLayout>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -168,11 +168,11 @@ export function BlogClient({ posts = [] }: { posts: BlogPost[] }) {
                       {featuredPost.excerpt}
                     </p>
                     <div className="mt-auto flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold" aria-label={featuredPost.author}>
-                        {featuredPost.author.charAt(0)}
+                      <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold" aria-label={featuredPost.author || 'Admin'}>
+                        {(featuredPost.author || 'Admin').charAt(0)}
                       </div>
                       <div className="text-sm">
-                        <p className="font-semibold text-foreground">{featuredPost.author}</p>
+                        <p className="font-semibold text-foreground">{featuredPost.author || 'Admin'}</p>
                         <p className="text-xs text-muted-foreground">{featuredPost.readTime}</p>
                       </div>
                     </div>
@@ -258,6 +258,6 @@ export function BlogClient({ posts = [] }: { posts: BlogPost[] }) {
         </section>
 
       </div>
-    </PageLayout>
+    </>
   );
 }

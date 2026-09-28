@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -6,8 +6,6 @@ import { PageLayout } from '@/components/layout/page-layout';
 import { Container } from '@/components/ui/container';
 import { CalendarDays, Clock, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-
-const prisma = new PrismaClient();
 
 export async function generateStaticParams() {
   const posts = await prisma.blogPost.findMany({

@@ -5,12 +5,19 @@ import { ServicesSection } from '@/components/sections/services-section';
 import dynamic from 'next/dynamic';
 import { Metadata } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { getSeoMeta } from '@/app/actions/seo';
 
-export const metadata: Metadata = {
-  alternates: {
-    canonical: '/',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMeta('home');
+  return {
+    title: seo?.title || 'Owllow IT Solutions | Enterprise IT Consulting & Technology Services',
+    description: seo?.description || 'Owllow IT Solutions provides enterprise IT consulting, cloud infrastructure, cybersecurity, and software development. Transform your business with us.',
+    keywords: seo?.keywords || 'IT solutions, IT consulting, cloud services, cybersecurity, software development, managed IT services, enterprise technology',
+    alternates: {
+      canonical: '/',
+    },
+  };
+}
 
 const prisma = new PrismaClient();
 
@@ -21,10 +28,6 @@ const AboutSection = dynamic(
 const WhyChooseUsSection = dynamic(
   () => import('@/components/sections/why-choose-us-section'),
   { loading: () => <div className="w-full min-h-[600px] bg-background" /> }
-);
-const TestimonialsSection = dynamic(
-  () => import('@/components/sections/testimonials-section'),
-  { ssr: false, loading: () => <div className="w-full min-h-[600px] bg-background" /> }
 );
 const ProjectsSection = dynamic(
   () => import('@/components/sections/projects-section'),
@@ -52,9 +55,7 @@ export default async function Home() {
     orderBy: { order: 'asc' },
   });
   
-  const testimonialsData = await prisma.testimonial.findMany({
-    orderBy: { order: 'asc' },
-  });
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,7 +67,7 @@ export default async function Home() {
         <WhyChooseUsSection featuresData={featuresData} />
 
         <ProjectsSection projects={projects} />
-        <TestimonialsSection testimonials={testimonialsData} />
+
         <CtaSection />
       </main>
       <Footer />

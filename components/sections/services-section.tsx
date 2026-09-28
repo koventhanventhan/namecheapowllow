@@ -68,7 +68,7 @@ export function ServicesSection({ hideHeader = false, servicesData }: { hideHead
                 key={service.id}
                 className="relative lg:sticky shrink-0 w-[85vw] sm:w-[400px] lg:w-full snap-center lg:snap-align-none lg:overflow-hidden rounded-3xl lg:rounded-none lg:rounded-t-[2.5rem] border border-border lg:border-border/50 bg-card lg:shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:lg:shadow-[0_-10px_40px_rgba(0,0,0,0.5)] transition-all duration-500 p-6 sm:p-8 lg:p-0 lg:mb-[10vh] lg:top-[var(--sticky-top)]"
                 style={{
-                  '--sticky-top': `calc(100px + ${index * 80}px)`,
+                  '--sticky-top': `calc(100px)`,
                   zIndex: index + 10,
                 } as React.CSSProperties}
               >

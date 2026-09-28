@@ -11,14 +11,19 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const metadata: Metadata = {
-  title: 'About Us | Owllow',
-  description:
-    'Learn more about Owllow — a leading web development and digital marketing company. Discover our services, team, and projects.',
-  alternates: {
-    canonical: '/about',
-  },
-};
+import { getSeoMeta } from '@/app/actions/seo';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMeta('about');
+  return {
+    title: seo?.title || 'About Us | Owllow',
+    description: seo?.description || 'Learn more about Owllow — a leading web development and digital marketing company. Discover our services, team, and projects.',
+    keywords: seo?.keywords || undefined,
+    alternates: {
+      canonical: '/about',
+    },
+  };
+}
 
 export default async function AboutPage() {
   const projects = await prisma.project.findMany({

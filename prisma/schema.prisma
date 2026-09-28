@@ -140,6 +140,20 @@ model SiteSettings {
   socialLinkedin  String?
   socialTwitter   String?
   footerTagline   String? @db.Text
+
+  // Contact Page Fields
+  contactHeading         String?
+  contactSubheading      String? @db.Text
+  contactCardHeading     String?
+  contactCardSubtext     String? @db.Text
+  scheduleCallHeading    String?
+  scheduleCallSubtext    String? @db.Text
+  scheduleCallButtonText String?
+  successHeading         String?
+  successSubtext         String? @db.Text
+  mapHeading             String?
+  mapEmbedUrl            String? @db.Text
+
   updatedAt       DateTime @updatedAt
 }
 

@@ -46,9 +46,7 @@ const navItems = [
   { title: "Blog", href: "/admin/blog", icon: FileText },
   { title: "Projects", href: "/admin/projects", icon: FolderKanban },
   { title: "Messages", href: "/admin/messages", icon: Mail },
-  { title: "Testimonials", href: "/admin/testimonials", icon: FileText },
-  { title: "Team", href: "/admin/team", icon: User },
-  { title: "Pricing", href: "/admin/pricing", icon: FileText },
+  { title: "SEO Settings", href: "/admin/seo", icon: FileText },
   { title: "Settings (Footer)", href: "/admin/settings", icon: LayoutDashboard },
 
 ];

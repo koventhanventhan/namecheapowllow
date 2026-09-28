@@ -8,13 +8,19 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const metadata: Metadata = {
-  title: 'Services We Provide | Owllow Studio',
-  description: 'Designing Experiences, Elevating Brands. Explore our comprehensive services including Branding, UX/UI Design, SEO, Development, Motion, and AI.',
-  alternates: {
-    canonical: '/services',
-  },
-};
+import { getSeoMeta } from '@/app/actions/seo';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMeta('services');
+  return {
+    title: seo?.title || 'Services We Provide | Owllow Studio',
+    description: seo?.description || 'Designing Experiences, Elevating Brands. Explore our comprehensive services including Branding, UX/UI Design, SEO, Development, Motion, and AI.',
+    keywords: seo?.keywords || undefined,
+    alternates: {
+      canonical: '/services',
+    },
+  };
+}
 
 export default async function ServicesPage() {
   const servicesData = await prisma.service.findMany({
