@@ -17,7 +17,7 @@ const footerLinks = [
       { label: 'Digital Marketing', href: '/services' },
       { label: 'Full Stack Development', href: '/services' },
       { label: 'IOT', href: '/services' },
-      { label: 'Grapic Design', href: '/services' },
+      { label: 'Graphic Design', href: '/services' },
       { label: 'E-commerce', href: '/services' },
       { label: 'Video Creation', href: '/services' },
     ],

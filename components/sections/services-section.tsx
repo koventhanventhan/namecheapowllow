@@ -60,12 +60,12 @@ export function ServicesSection({ hideHeader = false, servicesData }: { hideHead
           className={`${hideHeader ? 'mt-0' : 'mt-6 lg:mt-20'} relative w-full lg:pb-[10vh] flex lg:block overflow-x-auto lg:overflow-visible snap-x snap-mandatory gap-6 lg:gap-0 pb-8 lg:pb-0 px-4 sm:px-6 lg:px-0 -mx-4 sm:-mx-6 lg:mx-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth touch-pan-y`}
         >
           {(servicesData || []).map((service, index) => {
-            const Icon = Icons[service.icon as keyof typeof Icons] || Icons.HelpCircle;
+            const Icon = (Icons[service.icon as keyof typeof Icons] || Icons.HelpCircle) as any;
             const featuresList = typeof service.features === 'string' ? JSON.parse(service.features) : service.features;
             
             return (
               <div
-                key={service.id}
+                key={service.id} id={service.id}
                 className="relative lg:sticky shrink-0 w-[85vw] sm:w-[400px] lg:w-full snap-center lg:snap-align-none lg:overflow-hidden rounded-3xl lg:rounded-none lg:rounded-t-[2.5rem] border border-border lg:border-border/50 bg-card lg:shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:lg:shadow-[0_-10px_40px_rgba(0,0,0,0.5)] transition-all duration-500 p-6 sm:p-8 lg:p-0 lg:mb-[10vh] lg:top-[var(--sticky-top)]"
                 style={{
                   '--sticky-top': `calc(100px)`,
@@ -94,7 +94,7 @@ export function ServicesSection({ hideHeader = false, servicesData }: { hideHead
                       {/* Read More - single link, responsive via CSS */}
                       <div className="order-3 lg:order-5 flex">
                         <Link 
-                          href="/services" 
+                          href={`#${service.id}`} 
                           className="group inline-flex items-center gap-1 lg:gap-2 text-foreground lg:text-primary font-semibold text-sm lg:text-lg hover:opacity-80 transition-opacity mb-4 lg:mb-0 lg:mt-auto lg:pt-4"
                         >
                           Read More <span className="sr-only">about {service.title}</span>
@@ -127,7 +127,7 @@ export function ServicesSection({ hideHeader = false, servicesData }: { hideHead
                         src={service.image} 
                         alt={service.title}
                         fill
-                        className="object-cover transition-transform duration-[1.5s] hover:scale-110"
+                        className="object-cover transition-transform duration-1000 hover:scale-110"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-primary/5 flex items-center justify-center">
