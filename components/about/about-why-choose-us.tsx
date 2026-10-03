@@ -28,7 +28,7 @@ export function AboutWhyChooseUs({ featuresData }: { featuresData?: any[] }) {
           )}
         >
           {(featuresData || []).map((item, i) => {
-            const Icon = Icons[item.icon as keyof typeof Icons] || Icons.CheckCircle;
+            const Icon = (Icons[item.icon as keyof typeof Icons] || Icons.CheckCircle) as any;
             return (
               <div
                 key={item.title}

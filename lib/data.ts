@@ -117,7 +117,7 @@ export const services: Service[] = [
     icon: HiOutlineDevicePhoneMobile,
     features: ['iOS Development', 'Android Development', 'Cross-Platform Apps', 'UI/UX Design'],
     color: 'text-primary',
-    image: '/owllow_mobile_app_developement.webp',
+    image: '/owllow_mobile_app_developement.png',
   },
   {
     id: 'digital-marketing',
@@ -126,7 +126,7 @@ export const services: Service[] = [
     icon: HiOutlineChartBar,
     features: ['Search Engine Optimization', 'Social Media Strategy', 'Content Marketing', 'Analytics & Reporting'],
     color: 'text-primary',
-    image: '/owllow_digital_marketing.webp',
+    image: '/owllow_digital_marketing.jpg',
   },
   {
     id: 'full-stack',
@@ -144,7 +144,7 @@ export const services: Service[] = [
     icon: HiOutlineCpuChip,
     features: ['Smart Devices', 'IoT Platforms', 'Hardware Integration', 'Real-time Data'],
     color: 'text-primary',
-    image: '/owllow_ai_automation.webp',
+    image: '/owllow_ai_automation.png',
   },
   {
     id: 'graphic-design',
@@ -402,3 +402,6 @@ export const pricingPlans: PricingPlan[] = [
 
 
 export { FaLinkedinIn, FaXTwitter, FaGithub };
+
+export const blogPosts: any[] = [];
+export const portfolioItems: any[] = [];

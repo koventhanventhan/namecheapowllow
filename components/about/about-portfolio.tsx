@@ -71,7 +71,8 @@ export function AboutPortfolio({ projects = [] }: { projects?: Project[] }) {
           {filteredProjects.map((project, i) => (
             <Link
               key={project.id}
-              href={`/projects/${project.slug}`}
+              href={project.liveUrl || `/projects/${project.slug}`}
+              {...(project.liveUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className={cn(
                 'group relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1',
                 inView

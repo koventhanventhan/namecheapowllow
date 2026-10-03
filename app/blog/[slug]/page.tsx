@@ -7,14 +7,7 @@ import { Container } from '@/components/ui/container';
 import { CalendarDays, Clock, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export async function generateStaticParams() {
-  const posts = await prisma.blogPost.findMany({
-    select: { slug: true },
-  });
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = await prisma.blogPost.findUnique({

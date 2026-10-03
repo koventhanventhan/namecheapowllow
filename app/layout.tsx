@@ -5,6 +5,8 @@ import { Playfair_Display, Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/layout/theme-provider';
 import { CustomCursor } from '@/components/ui/custom-cursor';
 
+export const dynamic = 'force-dynamic';
+
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',

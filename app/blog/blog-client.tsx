@@ -31,7 +31,7 @@ function ArticleGridCard({ post, delayClass }: { post: any, delayClass: string }
           alt={post.title} 
           fill 
           sizes="(max-width: 768px) 90vw, 33vw" 
-          className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.1]" 
+                      className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.1]" 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80" />
         <Badge className="absolute bottom-4 left-4 border-0 bg-primary text-primary-foreground">{post.category}</Badge>
@@ -152,7 +152,7 @@ export function BlogClient({ posts = [] }: { posts: BlogPost[] }) {
                       src={featuredPost.image} 
                       alt={featuredPost.title} 
                       fill 
-                      className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.1]" 
+                                  className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.1]" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
                   </div>

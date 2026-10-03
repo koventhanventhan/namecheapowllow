@@ -9,6 +9,8 @@ import { AboutMissionVision } from '@/components/about/about-mission-vision';
 import { AboutStats } from '@/components/about/about-stats';
 import { PrismaClient } from '@prisma/client';
 
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 import { getSeoMeta } from '@/app/actions/seo';
@@ -27,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutPage() {
   const projects = await prisma.project.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
   });
 
   const featuresData = await prisma.whyChooseUsItem.findMany({

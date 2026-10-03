@@ -16,7 +16,7 @@ export function AboutFinalCta() {
         <div className="bg-primary/5 rounded-3xl p-10 md:p-20 border border-border">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to Build Something Amazing?</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto mb-10 text-lg">
-            Let's collaborate and bring your ideas to life. Our team of experts is ready to take your project to the next level.
+            Let&apos;s collaborate and bring your ideas to life. Our team of experts is ready to take your project to the next level.
           </p>
           <Button asChild size="lg" className="h-14 px-8 text-lg rounded-full">
             <Link href="/contact">

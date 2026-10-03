@@ -61,7 +61,8 @@ export function PortfolioSection({ items = [] }: { items?: Project[] }) {
             <div key={item.id} className="keen-slider__slide min-w-0">
               <div className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10">
                 <Link
-                  href={`/projects/${item.slug}`}
+                  href={item.liveUrl || `/projects/${item.slug}`}
+                  {...(item.liveUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="relative block aspect-[4/3] w-full overflow-hidden text-left"
                   aria-label={`View ${item.title} details`}
                 >

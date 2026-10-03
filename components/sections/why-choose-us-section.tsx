@@ -32,7 +32,7 @@ export function WhyChooseUsSection({ featuresData }: { featuresData?: any[] }) {
           className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {(featuresData || []).map((feature, i) => {
-            const Icon = Icons[feature.icon as keyof typeof Icons] || Icons.CheckCircle;
+            const Icon = (Icons[feature.icon as keyof typeof Icons] || Icons.CheckCircle) as any;
             return (
               <div
                 key={feature.id}

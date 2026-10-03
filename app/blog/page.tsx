@@ -3,6 +3,8 @@ import { BlogClient } from "./blog-client";
 import { Metadata } from 'next';
 import { PageLayout } from '@/components/layout/page-layout';
 
+export const dynamic = 'force-dynamic';
+
 import { getSeoMeta } from '@/app/actions/seo';
 
 export async function generateMetadata(): Promise<Metadata> {

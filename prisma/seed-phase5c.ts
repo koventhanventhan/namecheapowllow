@@ -10,7 +10,7 @@ async function main() {
     create: {
       companyName: 'Owllow',
       email: 'info@owllow.com',
-      phone: '(+94) 767 206 279\n(+64) 22 367 2717',
+
       whatsappNumber: '+94767206279',
       address: 'Owllow,\nKuppilan North, Erlalai,\nJaffna,\nSri Lanka.',
       socialFacebook: '#',

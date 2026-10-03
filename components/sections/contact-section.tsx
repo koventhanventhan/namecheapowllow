@@ -130,11 +130,7 @@ export function ContactSection({ isPageHeader = false, settings }: ContactSectio
                   </div>
                   <div className="flex flex-col gap-1">
                     <p className="text-sm font-semibold text-foreground">Phone</p>
-                    {settings?.whatsappNumber && (
-                      <a href={`https://wa.me/${settings.whatsappNumber.replace(/[^0-9+]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                        {settings.whatsappNumber}
-                      </a>
-                    )}
+
                     {settings?.phone && settings.phone.split('\n').map((p: string, i: number) => (
                       <a key={i} href={`tel:${p.replace(/[^0-9+]/g, '')}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                         {p}

@@ -5,9 +5,12 @@ import { ProjectsSection } from '@/components/sections/projects-section';
 import { ProjectCtaSection } from '@/components/sections/project-cta-section';
 import { PrismaClient } from '@prisma/client';
 
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 import { getSeoMeta } from '@/app/actions/seo';
+
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoMeta('projects');
@@ -23,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ProjectsPage() {
   const projects = await prisma.project.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
   });
   
 

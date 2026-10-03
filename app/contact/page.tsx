@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import { PageLayout } from '@/components/layout/page-layout';
 import { PrismaClient } from '@prisma/client';
 
+export const dynamic = 'force-dynamic';
+
 import { getSeoMeta } from '@/app/actions/seo';
 import { ContactSection } from '@/components/sections/contact-section';
 

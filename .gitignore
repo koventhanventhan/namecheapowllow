@@ -24,9 +24,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
+# local env files - broad pattern covers all .env variants
 .env
+.env*
 .env*.local
+.env.production
+.env.local
+.env.development
 
 # vercel
 .vercel
@@ -35,10 +39,49 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# archives & deploy artifacts
 *.zip
+*.tar.gz
+owllow-deploy.tar.gz
 
-# temp directories
+# SQL dumps
+*.sql
+
+# temp / test directories
 temp_extract/
 temp_final/
-.env.production  
- 
+temp_zip/
+test_zip/
+project_unzipped/
+prisma-upload-tmp/
+app/uploads/
+
+# local utility scripts (not part of source)
+check_links.js
+check_links2.js
+check-db.js
+dump-db-schema.js
+fetch-classes.js
+make-cpanel-zip.js
+make-deploy-zip.js
+make-full-zip.js
+make-prisma-zip.js
+make-standalone-zip.js
+make-zip.js
+measure-prod.js
+test-links.js
+test-sort.js
+output.html
+db_schema.json
+lh-*.json
+lighthouse*.json
+lighthouse*.txt
+site_content.txt
+owllow.com_*.json
+
+# agent config dirs (not source code)
+.agents/
+.claude/
+.cursor/
+.devin/
+.bolt/

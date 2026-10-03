@@ -2,10 +2,12 @@ import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { HeroSection } from '@/components/sections/hero-section';
 import { ServicesSection } from '@/components/sections/services-section';
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 import { Metadata } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { getSeoMeta } from '@/app/actions/seo';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoMeta('home');
@@ -21,19 +23,19 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const prisma = new PrismaClient();
 
-const AboutSection = dynamic(
+const AboutSection = nextDynamic(
   () => import('@/components/sections/about-section'),
   { loading: () => <div className="w-full min-h-[800px] bg-background" /> }
 );
-const WhyChooseUsSection = dynamic(
+const WhyChooseUsSection = nextDynamic(
   () => import('@/components/sections/why-choose-us-section'),
   { loading: () => <div className="w-full min-h-[600px] bg-background" /> }
 );
-const ProjectsSection = dynamic(
+const ProjectsSection = nextDynamic(
   () => import('@/components/sections/projects-section'),
   { loading: () => <div className="w-full min-h-[800px] bg-background" /> }
 );
-const CtaSection = dynamic(
+const CtaSection = nextDynamic(
   () => import('@/components/sections/cta-section'),
   { loading: () => <div className="w-full min-h-[400px] bg-background" /> }
 );
@@ -42,7 +44,7 @@ export default async function Home() {
   const projects = await prisma.project.findMany({
     where: { featured: true },
     take: 6,
-    orderBy: { createdAt: 'desc' },
+    orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
   });
 
   const heroData = await prisma.heroContent.findUnique({ where: { id: 1 } });

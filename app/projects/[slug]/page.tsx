@@ -9,16 +9,10 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
-export async function generateStaticParams() {
-  const projects = await prisma.project.findMany({
-    select: { slug: true },
-  });
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
-}
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const project = await prisma.project.findUnique({

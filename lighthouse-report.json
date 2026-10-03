@@ -4164,8 +4164,7 @@
                 "height": 17
               },
               "snippet": "<a href=\"tel:+94767206279\" class=\"hover:underline\">",
-              "nodeLabel": "(+94) 767 206 279",
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+              "nodeLabel": "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #9e9eff, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
             }
           },
           {

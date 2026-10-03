@@ -23,7 +23,7 @@ export function FaqSection() {
               Web Design Made Simple – Find Your Answers Here
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-md">
-              We specialized custom website designs, ensuring your site is unique and tailored to your brand's needs. However, we also offer cost-effective solutions.
+              We specialized custom website designs, ensuring your site is unique and tailored to your brand&apos;s needs. However, we also offer cost-effective solutions.
             </p>
             <Button size="lg" className="rounded-full px-8 font-semibold shadow-lg shadow-primary/20">
               Get A Quote

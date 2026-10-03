@@ -6,9 +6,12 @@ import { StatsSection } from '@/components/sections/stats-section';
 import { FaqSection } from '@/components/sections/faq-section';
 import { PrismaClient } from '@prisma/client';
 
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 import { getSeoMeta } from '@/app/actions/seo';
+
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoMeta('services');

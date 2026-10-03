@@ -38,7 +38,10 @@ export function ProjectsSection({ isPageHeader = false, projects = [] }: Project
           {projects.map((item, index) => {
             const isPlaceholder = item.slug === '#' || item.slug === '' || item.title.toLowerCase().includes('coming soon');
             const CardWrapper = isPlaceholder ? 'div' : Link;
-            const linkProps = isPlaceholder ? {} : { href: `/projects/${item.slug}` };
+            const linkProps = isPlaceholder ? {} : { 
+              href: item.liveUrl || `/projects/${item.slug}`,
+              ...(item.liveUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})
+            };
 
             return (
               <CardWrapper

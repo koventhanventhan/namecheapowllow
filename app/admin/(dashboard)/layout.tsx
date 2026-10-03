@@ -1,6 +1,8 @@
 import { AdminSidebar, AdminHeader } from "@/components/admin-sidebar";
 import { getCurrentAdminProfile } from "@/app/actions/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboardLayout({
   children,
 }: {

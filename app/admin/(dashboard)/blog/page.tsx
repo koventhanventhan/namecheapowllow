@@ -59,7 +59,7 @@ export default async function AdminBlogPage() {
                 <TableRow key={post.id}>
                   <TableCell className="font-medium">{post.title}</TableCell>
                   <TableCell>
-                    {new Date(post.publishedAt).toLocaleDateString()}
+                    {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : "Draft"}
                   </TableCell>
                   <TableCell>{post.author}</TableCell>
                   <TableCell className="text-right">

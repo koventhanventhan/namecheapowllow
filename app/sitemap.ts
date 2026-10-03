@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { PrismaClient } from '@prisma/client';
 
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 const baseUrl = 'https://owllow.com';
@@ -58,7 +60,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: { slug: true, publishedAt: true, createdAt: true }
   });
   const projects = await prisma.project.findMany({
-    select: { slug: true, createdAt: true }
+    select: { slug: true, createdAt: true },
+    orderBy: [{ order: 'asc' }, { createdAt: 'desc' }]
   });
 
   const dynamicBlogRoutes: MetadataRoute.Sitemap = blogs.map((post) => ({
